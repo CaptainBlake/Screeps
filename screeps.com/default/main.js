@@ -4,6 +4,12 @@ var roleBuilder = require('role.builder');
 
 module.exports.loop = function () {
     
+    /*
+        
+        Coop Screep Main
+        
+    */
+    
     //OUTPUTS AND VALS
     
     //Console logs and lists
