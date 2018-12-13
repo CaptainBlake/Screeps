@@ -9,12 +9,12 @@ module.exports.loop = function () {
     //Console logs and lists
         console.log('----' + Game.spawns['Spawn1'].room + '----');
         //Harvester-liste
-        var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+        var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
         console.log('Harvesters: ' + harvesters.length);
         //Builder-liste
-        var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
+        var builders = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
         console.log('Builders: ' + builders.length);
-        var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
+        var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
         console.log('Upgraders: ' + upgraders.length);
         
         console.log('/////////////////////////////////');
