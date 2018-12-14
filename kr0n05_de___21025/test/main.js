@@ -1,4 +1,4 @@
-var version = 1.1;
+var version = 1.0;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -48,7 +48,8 @@ module.exports.loop = function () {
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:', name);
         }
-        if(Game.creeps[name].memory.ver < version){
+        //Darwin
+        if(Game.creeps[name].memory.ver != version){
             Game.creeps[name].suicide();
         }
     }
@@ -64,7 +65,7 @@ module.exports.loop = function () {
             var src = 0;
         }
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, 
-            {memory: {role: 'harvester', source: src, ver: version }});    
+            {memory: {role: 'harvester', source: src, ver: version}});    
     }else
     
     //builder-Spawn-Control
