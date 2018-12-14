@@ -163,7 +163,7 @@ module.exports.loop = function () {
         ++tier;
         console.log('Reached Tier ' + tier);
     }
-    if(tier == 3 && extCount >= 5){
+    if(tier == 3 && extCount.length >= 5){
         bodyParts = [WORK,CARRY,MOVE, MOVE];
         ++tier;
         console.log('Reached Tier ' + tier);
