@@ -63,43 +63,44 @@ module.exports.loop = function () {
     //Harvester-Spawn-Control
     if(harvesters.length < maxHarvester) {
         var newName = 'Harvester' + Game.time;
-        console.log('Spawning new harvester: ' + newName);
         var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
         if(harvesters.length > 0){
         var src = (harvesters[harvesters.length-1].memory.source + 1)%srcs.length;
         }else{
             var src = 0;
         }
-        Game.spawns['Spawn1'].spawnCreep(bodyParts, newName, 
-            {memory: {role: 'harvester', source: src, ver: version}});    
+        if(Game.spawns['Spawn1'].spawnCreep(bodyParts, newName,{memory: {role: 'harvester', source: src, ver: version}}) >= 0){
+            console.log('Spawning new harvester: ' + newName);
+        }
+        
     }else
     
     //builder-Spawn-Control
     if(builders.length < maxBuilder) {
         var newName = 'Builder' + Game.time;
-        console.log('Spawning new Builder: ' + newName);
         var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
         if(builders.length > 0){
         var src = (builders[builders.length-1].memory.source + 1)%srcs.length;
         }else{
             var src = 0;
         }
-        Game.spawns['Spawn1'].spawnCreep(bodyParts, newName, 
-            {memory: {role: 'builder', source: src, ver: version}});        
+        if(Game.spawns['Spawn1'].spawnCreep(bodyParts, newName,{memory: {role: 'builder', source: src, ver: version}}) >= 0){
+            console.log('Spawning new Builder: ' + newName);
+        }
     }else
     
     //upgrader-Spawn-Control
     if(upgraders.length < maxUpgrader) {
         var newName = 'Upgrader' + Game.time;
-        console.log('Spawning new Upgrader: ' + newName);
         var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
         if(upgraders.length > 0){
         var src = (upgraders[upgraders.length-1].memory.source + 1)%srcs.length;
         }else{
             var src = 0;
         }
-        Game.spawns['Spawn1'].spawnCreep(bodyParts, newName, 
-            {memory: {role: 'upgrader', source: src, ver: version}});        
+        if(Game.spawns['Spawn1'].spawnCreep(bodyParts, newName,{memory: {role: 'upgrader', source: src, ver: version}}) >= 0){
+            console.log('Spawning new Upgrader: ' + newName);
+        }
     }
         
     //Role-Handler
@@ -141,6 +142,9 @@ module.exports.loop = function () {
             Game.spawns['Spawn1'].pos.y + 2,
             STRUCTURE_EXTENSION);
         ++tier;
+    }
+    if(tier == 2){
+        maxHarvester = 4;
     }
     
     //Tower Control
