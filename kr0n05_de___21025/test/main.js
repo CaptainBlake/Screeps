@@ -11,7 +11,7 @@ module.exports.loop = function () {
     
     /*
         
-        Coop Screep Main
+        Coop Screep Main v1.1
         
     */
     
