@@ -44,13 +44,13 @@ module.exports.loop = function () {
     
     //Ethnic cleansing
     for(var name in Memory.creeps) {
+        //Darwin
+        if(Game.creeps[name] && Game.creeps[name].memory.ver != version){
+            Game.creeps[name].suicide();
+        }
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:', name);
-        }
-        //Darwin
-        if(Game.creeps[name].memory.ver != version){
-            Game.creeps[name].suicide();
         }
     }
     
