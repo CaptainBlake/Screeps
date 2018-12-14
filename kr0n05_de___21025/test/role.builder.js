@@ -29,7 +29,7 @@ var roleBuilder = {
                 }
             }else{
                     //Builders are now harvesters if they have nothing to do
-                    roleHarvester.run(creep);
+                    //roleHarvester.run(creep);
                     //creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
 	    }
