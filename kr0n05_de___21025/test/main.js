@@ -3,7 +3,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 
-var tier = 0;
+Memory.tier = {level: 0};
 
 var maxBuilder = 2;
 var maxUpgrader = 2;
@@ -128,7 +128,7 @@ module.exports.loop = function () {
 
     //Tier display
     Game.spawns['Spawn1'].room.visual.text(
-    'Tier️' + tier,
+    'Tier️' +Memory.tier.level,
     Game.spawns['Spawn1'].pos.x, 
     Game.spawns['Spawn1'].pos.y - 2, 
     {align: 'center', opacity: 0.8});
@@ -136,13 +136,13 @@ module.exports.loop = function () {
     //Tier modes
 
     //Tier 0
-    if(tier == 0 && builders.length > 0){
-        ++tier;
-        console.log('Reached Tier ' + tier);
+    if(Memory.tier.level == 0 && builders.length > 0){
+        ++Memory.tier.level;
+        console.log('Reached Tier ' + Memory.tier.level);
     }
 
     //Tier 1
-    if(tier == 1){
+    if(Memory.tier.level == 1){
         Game.spawns['Spawn1'].room.createConstructionSite(
             Game.spawns['Spawn1'].pos.x + 2, 
             Game.spawns['Spawn1'].pos.y - 2,
@@ -163,22 +163,22 @@ module.exports.loop = function () {
             Game.spawns['Spawn1'].pos.x, 
             Game.spawns['Spawn1'].pos.y + 2,
             STRUCTURE_EXTENSION);
-        ++tier;
-        console.log('Reached Tier ' + tier);
+        ++Memory.tier.level;
+        console.log('Reached Tier ' + Memory.tier.level);
     }
 
     //Tier 2
-    if(tier == 2){
+    if(Memory.tier.level == 2){
         maxHarvester = 4;
-        ++tier;
-        console.log('Reached Tier ' + tier);
+        ++Memory.tier.level;
+        console.log('Reached Tier ' + Memory.tier.level);
     }
 
     //Tier 3
-    if(tier == 3 && extCount.length >= 5){
+    if(Memory.tier.level == 3 && extCount.length >= 5){
         bodyParts = [WORK,CARRY,MOVE, MOVE];
-        ++tier;
-        console.log('Reached Tier ' + tier);
+        ++Memory.tier.level;
+        console.log('Reached Tier ' + Memory.tier.level);
     }
     
     //Tower Control
