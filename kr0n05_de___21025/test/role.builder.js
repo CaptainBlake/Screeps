@@ -42,7 +42,7 @@ var roleBuilder = {
             });
             if(stores.length > 0) {
                 creep.say('pick up');
-                if(creep.getEnergyFromStorage() == ERR_NOT_IN_RANGE) {
+                if(creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }else{
