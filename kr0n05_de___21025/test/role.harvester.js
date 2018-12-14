@@ -33,8 +33,8 @@ var roleHarvester = {
                 }
             }else{
                     //Harvesters are now upgraders if they have nothing to do
-                    roleUpgrader.run(creep);
-                    //creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
+                    //roleUpgrader.run(creep);
+                    creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
         }
 	}
