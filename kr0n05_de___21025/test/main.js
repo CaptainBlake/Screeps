@@ -2,6 +2,9 @@ var version = 1.0;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+
+var tier = 0;
+
 var maxBuilder = 2;
 var maxUpgrader = 2;
 var maxHarvester = 2;
@@ -111,6 +114,31 @@ module.exports.loop = function () {
     }
     
     //AI CONTROLL
+    Game.spawns['Spawn1'].room.visual.text(
+            'Tier️' + tier,
+            Game.spawns['Spawn1'].pos.x, 
+            Game.spawns['Spawn1'].pos.y - 2, 
+            {align: 'center', opacity: 0.8});
+    if(tier == 0 && Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity && builders.length > 0) ++tier;
+    if(tier == 1){
+        Game.spawns['Spawn1'].room.createConstructionSite(
+            Game.spawns['Spawn1'].pos.x + 2, 
+            Game.spawns['Spawn1'].pos.y - 2,
+            STRUCTURE_EXTENSION);
+        Game.spawns['Spawn1'].room.createConstructionSite(
+            Game.spawns['Spawn1'].pos.x + 2, 
+            Game.spawns['Spawn1'].pos.y + 2,
+            STRUCTURE_EXTENSION);
+        Game.spawns['Spawn1'].room.createConstructionSite(
+            Game.spawns['Spawn1'].pos.x - 2, 
+            Game.spawns['Spawn1'].pos.y - 2,
+            STRUCTURE_EXTENSION);
+        Game.spawns['Spawn1'].room.createConstructionSite(
+            Game.spawns['Spawn1'].pos.x - 2, 
+            Game.spawns['Spawn1'].pos.y + 2,
+            STRUCTURE_EXTENSION);
+        ++tier;
+    }
     
     //Tower Control
     var tower = Game.getObjectById('c8e832f3f947cacb7ad0656d');
