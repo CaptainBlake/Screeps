@@ -17,8 +17,10 @@ module.exports.loop = function () {
     
     /*
         
-        Coop Screep Main v1.1
-        
+        Coop Screeps AI
+
+        *Desc here*
+
     */
     
     
@@ -123,17 +125,23 @@ module.exports.loop = function () {
                         return (structure.structureType == STRUCTURE_EXTENSION);
                     }
                 });
+
     //Tier display
     Game.spawns['Spawn1'].room.visual.text(
     'Tier️' + tier,
     Game.spawns['Spawn1'].pos.x, 
     Game.spawns['Spawn1'].pos.y - 2, 
     {align: 'center', opacity: 0.8});
+
     //Tier modes
+
+    //Tier 0
     if(tier == 0 && builders.length > 0){
         ++tier;
         console.log('Reached Tier ' + tier);
     }
+
+    //Tier 1
     if(tier == 1){
         Game.spawns['Spawn1'].room.createConstructionSite(
             Game.spawns['Spawn1'].pos.x + 2, 
@@ -158,11 +166,15 @@ module.exports.loop = function () {
         ++tier;
         console.log('Reached Tier ' + tier);
     }
+
+    //Tier 2
     if(tier == 2){
         maxHarvester = 4;
         ++tier;
         console.log('Reached Tier ' + tier);
     }
+
+    //Tier 3
     if(tier == 3 && extCount.length >= 5){
         bodyParts = [WORK,CARRY,MOVE, MOVE];
         ++tier;
@@ -186,4 +198,4 @@ module.exports.loop = function () {
             tower.attack(closestHostile);
         }
     }
-}
+};
