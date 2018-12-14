@@ -45,7 +45,7 @@ var roleBuilder = {
                 }
             }else{
                 var sources = creep.room.find(FIND_SOURCES);
-                creep.say('farming');
+                creep.say('⛏');
                 if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
