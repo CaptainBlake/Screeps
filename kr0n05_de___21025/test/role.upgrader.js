@@ -18,10 +18,23 @@ var roleUpgrader = {
 			}
 		}
 		else {
-			var sources = creep.room.find(FIND_SOURCES);
-			if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
-				creep.say('⛏');
-                creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
+			var stores = creep.room.find(FIND_STRUCTURES, {
+				filter: (structure) => {
+					return (structure.structureType == STRUCTURE_EXTENSION)
+							 && structure.energy != 0;
+				}
+			});
+			if(stores.length > 0) {
+				creep.say('pick up');
+				if(creep.getEnergyFromStorage() == ERR_NOT_IN_RANGE) {
+					creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
+				}
+			}else{
+				var sources = creep.room.find(FIND_SOURCES);
+				creep.say('farming');
+				if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
+					creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
+				}
 			}
 		}
 	}
