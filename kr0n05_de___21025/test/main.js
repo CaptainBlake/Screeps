@@ -10,6 +10,7 @@ var maxUpgrader = 2;
 var maxHarvester = 2;
 
 var logging = false;
+var bodyParts = [WORK,CARRY,MOVE];
 
 module.exports.loop = function () {
     
@@ -59,7 +60,6 @@ module.exports.loop = function () {
         }
     }
     
-    var bodyParts = [WORK,CARRY,MOVE,MOVE];
     //Harvester-Spawn-Control
     if(harvesters.length < maxHarvester) {
         var newName = 'Harvester' + Game.time;
@@ -118,12 +118,22 @@ module.exports.loop = function () {
     }
     
     //AI CONTROLL
+    var extCount = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {
+                    filter: (structure) => {
+                        return (structure.structureType == STRUCTURE_EXTENSION);
+                    }
+                });
+    //Tier display
     Game.spawns['Spawn1'].room.visual.text(
-            'Tier️' + tier,
-            Game.spawns['Spawn1'].pos.x, 
-            Game.spawns['Spawn1'].pos.y - 2, 
-            {align: 'center', opacity: 0.8});
-    if(tier == 0 && Game.spawns['Spawn1'].energy == Game.spawns['Spawn1'].energyCapacity && builders.length > 0) ++tier;
+    'Tier️' + tier,
+    Game.spawns['Spawn1'].pos.x, 
+    Game.spawns['Spawn1'].pos.y - 2, 
+    {align: 'center', opacity: 0.8});
+    //Tier modes
+    if(tier == 0 && builders.length > 0){
+        ++tier;
+        console.log('Reached Tier ' + tier);
+    }
     if(tier == 1){
         Game.spawns['Spawn1'].room.createConstructionSite(
             Game.spawns['Spawn1'].pos.x + 2, 
@@ -141,10 +151,22 @@ module.exports.loop = function () {
             Game.spawns['Spawn1'].pos.x - 2, 
             Game.spawns['Spawn1'].pos.y + 2,
             STRUCTURE_EXTENSION);
+        Game.spawns['Spawn1'].room.createConstructionSite(
+            Game.spawns['Spawn1'].pos.x, 
+            Game.spawns['Spawn1'].pos.y + 2,
+            STRUCTURE_EXTENSION);
         ++tier;
+        console.log('Reached Tier ' + tier);
     }
     if(tier == 2){
         maxHarvester = 4;
+        ++tier;
+        console.log('Reached Tier ' + tier);
+    }
+    if(tier == 3 && extCount >= 5){
+        bodyParts = [WORK,CARRY,MOVE, MOVE];
+        ++tier;
+        console.log('Reached Tier ' + tier);
     }
     
     //Tower Control
