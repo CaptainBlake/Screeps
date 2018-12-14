@@ -42,7 +42,7 @@ module.exports.loop = function () {
     
     //SPAWN CONTROLL
     
-    //Memory-Cleaner
+    //Ethnic cleansing
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
