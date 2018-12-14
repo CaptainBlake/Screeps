@@ -49,24 +49,42 @@ module.exports.loop = function () {
     if(harvesters.length < 2) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
+        var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
+        if(harvesters.length > 0){
+        var src = (harvesters[harvesters.length-1].memory.source + 1)%srcs.length;
+        }else{
+            var src = 0;
+        }
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, 
-            {memory: {role: 'harvester'}});        
+            {memory: {role: 'harvester', source: src}});    
     }else
     
     //builder-Spawn-Control
     if(builders.length < 1) {
         var newName = 'Builder' + Game.time;
         console.log('Spawning new Builder: ' + newName);
+        var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
+        if(builders.length > 0){
+        var src = (builders[builders.length-1].memory.source + 1)%srcs.length;
+        }else{
+            var src = 0;
+        }
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, 
-            {memory: {role: 'builder'}});        
+            {memory: {role: 'builder', source: src}});        
     }else
     
     //upgrader-Spawn-Control
     if(upgraders.length < 1) {
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new Upgrader: ' + newName);
+        var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
+        if(upgraders.length > 0){
+        var src = (upgraders[upgraders.length-1].memory.source + 1)%srcs.length;
+        }else{
+            var src = 0;
+        }
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, 
-            {memory: {role: 'upgrader'}});        
+            {memory: {role: 'upgrader', source: src}});        
     }
         
     //Role-Handler
