@@ -6,7 +6,7 @@
  * var mod = require('role.harvester');
  * mod.thing == 'a thing'; // true
  */
-
+var roleUpgrader = require('role.upgrader');
 var roleHarvester = {
 
     /** @param {Creep} creep **/
@@ -32,7 +32,9 @@ var roleHarvester = {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }else{
-                    creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
+                    //Harvesters are now upgraders if they have nothing to do
+                    roleUpgrader.run(creep);
+                    //creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
         }
 	}
