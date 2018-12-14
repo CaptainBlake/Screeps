@@ -1,6 +1,10 @@
+var version = 1.1;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var maxBuilder = 1;
+var maxUpgrader = 2;
+var maxHarvester = 2;
 
 module.exports.loop = function () {
     
@@ -10,6 +14,7 @@ module.exports.loop = function () {
         Coop Screep Main
         
     */
+    
     
     //OUTPUTS AND VALS
     
@@ -43,10 +48,13 @@ module.exports.loop = function () {
             delete Memory.creeps[name];
             console.log('Clearing non-existing creep memory:', name);
         }
+        if(Game.creeps[name].memory.ver < version){
+            Game.creeps[name].suicide();
+        }
     }
     
     //Harvester-Spawn-Control
-    if(harvesters.length < 2) {
+    if(harvesters.length < maxHarvester) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
         var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
@@ -56,11 +64,11 @@ module.exports.loop = function () {
             var src = 0;
         }
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, 
-            {memory: {role: 'harvester', source: src}});    
+            {memory: {role: 'harvester', source: src, ver: version }});    
     }else
     
     //builder-Spawn-Control
-    if(builders.length < 1) {
+    if(builders.length < maxBuilder) {
         var newName = 'Builder' + Game.time;
         console.log('Spawning new Builder: ' + newName);
         var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
@@ -70,11 +78,11 @@ module.exports.loop = function () {
             var src = 0;
         }
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, 
-            {memory: {role: 'builder', source: src}});        
+            {memory: {role: 'builder', source: src, ver: version}});        
     }else
     
     //upgrader-Spawn-Control
-    if(upgraders.length < 1) {
+    if(upgraders.length < maxUpgrader) {
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new Upgrader: ' + newName);
         var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
@@ -84,7 +92,7 @@ module.exports.loop = function () {
             var src = 0;
         }
         Game.spawns['Spawn1'].spawnCreep([WORK,CARRY,MOVE], newName, 
-            {memory: {role: 'upgrader', source: src}});        
+            {memory: {role: 'upgrader', source: src, ver: version}});        
     }
         
     //Role-Handler
