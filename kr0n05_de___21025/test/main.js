@@ -3,7 +3,9 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 
-Memory.tier = {level: 0};
+if(!Memory.tier){
+    Memory.tier = {level: 0};
+}
 
 var maxBuilder = 2;
 var maxUpgrader = 2;
