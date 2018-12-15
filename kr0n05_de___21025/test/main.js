@@ -2,7 +2,6 @@ var version = 1.0;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var rolePlanner = require('role.planner');
 
 if(!Memory.tier){
     Memory.tier = {level: 0};
@@ -20,24 +19,23 @@ var logging = false;
 var bodyParts = [WORK,CARRY,MOVE];
 
 module.exports.loop = function () {
-    
-    
+
+
     /*
-        
+
         Coop Screeps AI
 
         *Desc here*
 
     */
-    
-    
+
+
     //OUTPUTS AND VALS
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
-    var creeplist = _.filter(Game.creeps);
 
-        
+
     //Console logs
     if(logging){
         console.log('----' + Game.spawns['Spawn1'].room + '----');
@@ -48,17 +46,15 @@ module.exports.loop = function () {
     }
 
     //Spawn icon
-    if(Game.spawns['Spawn1'].spawning) { 
+    if(Game.spawns['Spawn1'].spawning) {
         var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
         Game.spawns['Spawn1'].room.visual.text(
             '🛠️' + spawningCreep.memory.role,
-            Game.spawns['Spawn1'].pos.x + 1, 
-            Game.spawns['Spawn1'].pos.y, 
+            Game.spawns['Spawn1'].pos.x + 1,
+            Game.spawns['Spawn1'].pos.y,
             {align: 'left', opacity: 0.8});
     }
-    
-    //SPAWN CONTROLL
-    
+
     //Ethnic cleansing
     for(var name in Memory.creeps) {
         //Darwin
@@ -70,41 +66,24 @@ module.exports.loop = function () {
             console.log(name + ' died!');
         }
     }
-    
+
+    //SPAWN CONTROLLER
+
     //Harvester-Spawn-Control
     if(harvesters.length < maxHarvester) {
-        var newName = 'Harvester' + Game.time;
-        var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
-        if(harvesters.length > 0){
-        var src = (harvesters[harvesters.length-1].memory.source + 1)%srcs.length;
-        }else{
-            var src = 0;
-        }
-        if(Game.spawns['Spawn1'].spawnCreep(bodyParts, newName,{memory: {role: 'harvester', source: src, ver: version}}) >= 0){
-            console.log('Spawning new harvester: ' + newName);
-        }
-        
+        roleHarvester.spawn(Game.spawns['Spawn1'], version);
     }else
-    
+
     //builder-Spawn-Control
     if(builders.length < maxBuilder) {
-        roleBuilder.spawn(Game.spawns['Spawn1'], creeplist, version);
+        roleBuilder.spawn(Game.spawns['Spawn1'], version);
     }else
-    
+
     //upgrader-Spawn-Control
     if(upgraders.length < maxUpgrader) {
-        var newName = 'Upgrader' + Game.time;
-        var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
-        if(upgraders.length > 0){
-        var src = (upgraders[upgraders.length-1].memory.source + 1)%srcs.length;
-        }else{
-            var src = 0;
-        }
-        if(Game.spawns['Spawn1'].spawnCreep(bodyParts, newName,{memory: {role: 'upgrader', source: src, ver: version}}) >= 0){
-            console.log('Spawning new Upgrader: ' + newName);
-        }
+        roleUpgrader.spawn(Game.spawns['Spawn1'], version);
     }
-        
+
     //Role-Handler
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
@@ -117,11 +96,8 @@ module.exports.loop = function () {
         if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
         }
-        if(creep.memory.role == 'planner') {
-            rolePlanner.run(creep);
-        }
     }
-    
+
     //AI CONTROLL
     var extCount = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {
                     filter: (structure) => {
@@ -132,8 +108,8 @@ module.exports.loop = function () {
     //Tier display
     Game.spawns['Spawn1'].room.visual.text(
     'Tier️' +Memory.tier.level,
-    Game.spawns['Spawn1'].pos.x, 
-    Game.spawns['Spawn1'].pos.y - 2, 
+    Game.spawns['Spawn1'].pos.x,
+    Game.spawns['Spawn1'].pos.y - 2,
     {align: 'center', opacity: 0.8});
 
     //Tier modes
@@ -148,23 +124,23 @@ module.exports.loop = function () {
     //Tier 2
     if(Memory.tier.level == 1 && controllerlevel >= 2){
         Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x + 2, 
+            Game.spawns['Spawn1'].pos.x + 2,
             Game.spawns['Spawn1'].pos.y - 2,
             STRUCTURE_EXTENSION);
         Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x + 2, 
+            Game.spawns['Spawn1'].pos.x + 2,
             Game.spawns['Spawn1'].pos.y + 2,
             STRUCTURE_EXTENSION);
         Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x - 2, 
+            Game.spawns['Spawn1'].pos.x - 2,
             Game.spawns['Spawn1'].pos.y - 2,
             STRUCTURE_EXTENSION);
         Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x - 2, 
+            Game.spawns['Spawn1'].pos.x - 2,
             Game.spawns['Spawn1'].pos.y + 2,
             STRUCTURE_EXTENSION);
         Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x, 
+            Game.spawns['Spawn1'].pos.x,
             Game.spawns['Spawn1'].pos.y + 2,
             STRUCTURE_EXTENSION);
         ++Memory.tier.level;
@@ -175,7 +151,6 @@ module.exports.loop = function () {
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         maxHarvester = 4;
         ++Memory.tier.level;
-
         console.log('Reached Tier ' + Memory.tier.level);
     }
     if(!Memory.tier.plannedToCont && Memory.tier.level >=2 ){
