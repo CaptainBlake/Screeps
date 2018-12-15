@@ -19,7 +19,7 @@ var maxBuilder = 2;
 var maxUpgrader = 2;
 var maxHarvester = 2;
 var maxJanitor = 1;
-var logging = true;
+var logging = false;
 var bodyParts = [WORK,CARRY,MOVE];
 if(!Memory.tier){
     Memory.tier = {level: 0};
@@ -165,7 +165,7 @@ module.exports.loop = function () {
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         maxHarvester = 4;
         ++Memory.tier.level;
-        tasks.plan();
+        tasks.roadPlan();
         console.log('Reached Tier ' + Memory.tier.level);
     }
     //Tier 4
