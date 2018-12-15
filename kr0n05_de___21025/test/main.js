@@ -3,6 +3,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var rolePlanner = require('role.planner');
+var roleJanitor = require('role.janitor');
 
 if(!Memory.tier){
     Memory.tier = {level: 0};
@@ -15,6 +16,7 @@ if(!Memory.tier.plannedToCont){
 var maxBuilder = 2;
 var maxUpgrader = 2;
 var maxHarvester = 2;
+var maxJanitor = 1;
 
 var logging = false;
 var bodyParts = [WORK,CARRY,MOVE];
@@ -35,7 +37,7 @@ module.exports.loop = function () {
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
-
+    var janitors = _.filter(Game.creeps, (creep) => creep.memory.role === 'janitor');
 
     //Console logs
     if(logging){
@@ -43,6 +45,7 @@ module.exports.loop = function () {
         console.log('Harvesters: ' + harvesters.length);
         console.log('Builders: ' + builders.length);
         console.log('Upgraders: ' + upgraders.length);
+        console.log('Janitors: ' + janitors.length);
         console.log('/////////////////////////////////');
     }
 
@@ -85,6 +88,10 @@ module.exports.loop = function () {
         roleUpgrader.spawn(Game.spawns['Spawn1'], version);
     }
 
+    //janitor-Spawn-Control
+    if(janitors.length < maxJanitor) {
+        roleJanitor.spawn(Game.spawns['Spawn1'], version);
+    }
     //Role-Handler
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
@@ -99,6 +106,9 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'planner') {
             rolePlanner.run(creep);
+        }
+        if(creep.memory.role == 'janitor') {
+            roleJanitor.run(creep);
         }
     }
 

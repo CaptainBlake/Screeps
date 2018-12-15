@@ -8,7 +8,7 @@
  */
 var roleName = "janitor";
 var bodyParts = [WORK,CARRY,MOVE];
-var roleBuilder = {
+var roleJanitor = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
@@ -28,8 +28,8 @@ var roleBuilder = {
                 creep.memory.repairing = true;
                 creep.say('🚧 repair');
             }
-            if(creep.memory.building) {
-                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+            if(creep.memory.repairing) {
+                if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             }else {
@@ -74,4 +74,4 @@ var roleBuilder = {
     }
 };
 
-module.exports = roleBuilder;
+module.exports = roleJanitor;
