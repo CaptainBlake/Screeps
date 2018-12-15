@@ -43,11 +43,7 @@ var roleUpgrader = {
         //Constructor
         var newName = roleName + Game.time;
         var srcs = spawner.room.find(FIND_SOURCES);
-        if(Game.creeps.length > 0){
-            var src = (Game.creeps[Game.creeps.length-1].memory.source + 1)%srcs.length;
-        }else{
-            var src = 0;
-        }
+        var src = Game.time%srcs.length;
         //Tier-Stages
         if(Memory.tier.level >= 3){
             bodyParts = [WORK,CARRY,MOVE, MOVE];
