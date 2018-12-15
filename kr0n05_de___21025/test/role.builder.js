@@ -6,7 +6,7 @@
  * var mod = require('role.builder');
  * mod.thing == 'a thing'; // true
  */
-var roleHarvester = require('role.harvester');
+var roleJanitor = require('role.janitor');
 var roleName = "builder";
 var bodyParts = [WORK,CARRY,MOVE];
 var roleBuilder = {
@@ -50,7 +50,7 @@ var roleBuilder = {
 	        }
 	        
         }else{
-            roleHarvester.run(creep);
+            roleJanitor.run(creep);
         }
 	},
     spawn: function(spawner, version) {
