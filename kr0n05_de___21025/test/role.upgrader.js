@@ -51,7 +51,7 @@ var roleUpgrader = {
         var src = Game.time%srcs.length;
         //Tier-Stages
         if(Memory.tier.level >= 3){
-            bodyParts = [CARRY,CARRY,MOVE, MOVE];
+            bodyParts = [CARRY,CARRY,WORK,MOVE, MOVE, MOVE];
         }
 
         //Spawn
