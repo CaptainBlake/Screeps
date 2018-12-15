@@ -14,7 +14,6 @@ var roleBuilder = {
     run: function(creep) {
 
         var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-
         if(targets.length){
             if(creep.memory.building && creep.carry.energy == 0) {
                 creep.memory.building = false;

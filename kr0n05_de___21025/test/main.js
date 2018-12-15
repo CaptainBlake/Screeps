@@ -2,6 +2,7 @@ var version = 1.0;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var rolePlanner = require('role.planner');
 
 if(!Memory.tier){
     Memory.tier = {level: 0};
@@ -12,6 +13,7 @@ var maxUpgrader = 2;
 var maxHarvester = 2;
 
 var logging = false;
+var planning = false;
 var bodyParts = [WORK,CARRY,MOVE];
 
 module.exports.loop = function () {
@@ -112,6 +114,9 @@ module.exports.loop = function () {
         if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
         }
+        if(creep.memory.role == 'planner') {
+            rolePlanner.run(creep);
+        }
     }
     
     //AI CONTROLL
@@ -166,12 +171,18 @@ module.exports.loop = function () {
     //Tier 3
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         maxHarvester = 4;
+        if(!planning && (Game.spawns['Spawn1'].spawnCreep([MOVE], 'toController',{memory: {planToCon: true, role: 'planner', ver: version}}) >= 0)){
+            console.log('Spawning new planner: toController');
+            planning = true;
+        }
         ++Memory.tier.level;
+
         console.log('Reached Tier ' + Memory.tier.level);
     }
 
     //Tier 4
     if(Memory.tier.level == 3 && controllerlevel >= 3){
+        planning = false;
         bodyParts = [WORK,CARRY,MOVE, MOVE];
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
