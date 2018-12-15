@@ -1,5 +1,5 @@
 /*
-     Coop Screeps AI - v.1.0
+     Kraken AI - v.1.1
 
      Main handles:
      -Vars
@@ -7,6 +7,7 @@
      -Task Controller
      -Spawn Controller
      -Tier Controller
+     -AI Controller
 
  */
 
