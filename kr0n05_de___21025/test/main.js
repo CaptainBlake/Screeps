@@ -66,6 +66,8 @@ module.exports.loop = function () {
     //TASK CONTROLLER
 
     //Tasklist
+
+    defendRoom(Game.spawns['Spawn1'].room.name);
     if(Memory.tier.level >= 3){
         if(Game.time%1000==0){
             tasks.roadPlan();
@@ -179,25 +181,16 @@ module.exports.loop = function () {
     }
 
 
-    //AI CONTROLLER (Needs to get Overhaul)
-
-    //Tower Control
-    /*
-    var tower;
-    if(tower) {
-        //heal-mode
-        var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax/2
-        });
-        if(closestDamagedStructure) {
-            tower.repair(closestDamagedStructure);
-        }
-        //attack-mode
-        var closestHostile = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        if(closestHostile) {
-            
-            tower.attack(closestHostile);
+    //AI CONTROLLER
+    function defendRoom(roomName) {
+        var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
+        if(hostiles.length > 0) {
+            var towers = Game.rooms[roomName].find(
+                FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
+            towers.forEach(tower => tower.attack(hostiles[0]));
         }
     }
-    */
+    //Tower AI (attack only)
+
+
 };
