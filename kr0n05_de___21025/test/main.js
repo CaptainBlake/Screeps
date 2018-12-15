@@ -12,8 +12,9 @@ var version = 1.0;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
-var rolePlanner = require('role.planner');
 var roleJanitor = require('role.janitor');
+var tasks = require('tasks');
+
 var maxBuilder = 2;
 var maxUpgrader = 2;
 var maxHarvester = 2;
@@ -107,9 +108,6 @@ module.exports.loop = function () {
         if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
         }
-        if(creep.memory.role == 'planner') {
-            rolePlanner.run(creep);
-        }
         if(creep.memory.role == 'janitor') {
             roleJanitor.run(creep);
         }
@@ -163,13 +161,8 @@ module.exports.loop = function () {
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         maxHarvester = 4;
         ++Memory.tier.level;
+        tasks.plan();
         console.log('Reached Tier ' + Memory.tier.level);
-    }
-    if(!Memory.tier.plannedToCont && Memory.tier.level >=2 ){
-        if((Game.spawns['Spawn1'].spawnCreep([MOVE], 'toController',{memory: {planToCon: true, role: 'planner', ver: version}}) >= 0)){
-            console.log('Spawning new planner: toController');
-            Memory.tier.plannedToCont = true;
-        }
     }
     //Tier 4
     if(Memory.tier.level == 3 && controllerlevel >= 3){
