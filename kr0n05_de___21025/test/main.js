@@ -137,6 +137,7 @@ module.exports.loop = function () {
 
     //Tier modes
     var controllerlevel = creep.room.controller.level;
+
     //Tier 1
     if(Memory.tier.level == 0 && builders.length > 0){
         ++Memory.tier.level;
@@ -170,14 +171,14 @@ module.exports.loop = function () {
     }
 
     //Tier 3
-    if(Memory.tier.level == 2 && controllerlevel >= 3){
+    if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         maxHarvester = 4;
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
 
     //Tier 4
-    if(Memory.tier.level == 3 && extCount.length >= 5 && controllerlevel >= 4){
+    if(Memory.tier.level == 3 && controllerlevel >= 3){
         bodyParts = [WORK,CARRY,MOVE, MOVE];
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
