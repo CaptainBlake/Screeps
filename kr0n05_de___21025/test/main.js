@@ -17,9 +17,9 @@ var tasks = require('tasks');
 
 var maxBuilder = 2;
 var maxUpgrader = 2;
-var maxHarvester = 2;
+var maxHarvester = 3;
 var maxJanitor = 1;
-var logging = false;
+var logging = true;
 var bodyParts = [WORK,CARRY,MOVE];
 if(!Memory.tier){
     Memory.tier = {level: 0};
@@ -43,12 +43,16 @@ module.exports.loop = function () {
 
     //Console logs
     if(logging){
+        if(Game.time % 20 == 0)
+        {
+            
         console.log('----' + Game.spawns['Spawn1'].room + '----');
         console.log('Harvesters: ' + harvesters.length);
         console.log('Builders: ' + builders.length);
         console.log('Upgraders: ' + upgraders.length);
         console.log('Janitors: ' + janitors.length);
         console.log('/////////////////////////////////');
+        }
     }
 
     //SPAWN CONTROLLER
