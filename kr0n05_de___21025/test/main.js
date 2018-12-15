@@ -2,6 +2,7 @@ var version = 1.0;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var rolePlanner = require('role.planner');
 
 if(!Memory.tier){
     Memory.tier = {level: 0};
@@ -95,6 +96,9 @@ module.exports.loop = function () {
         }
         if(creep.memory.role == 'builder') {
             roleBuilder.run(creep);
+        }
+        if(creep.memory.role == 'planner') {
+            rolePlanner.run(creep);
         }
     }
 

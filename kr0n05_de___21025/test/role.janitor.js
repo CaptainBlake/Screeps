@@ -6,29 +6,33 @@
  * var mod = require('role.builder');
  * mod.thing == 'a thing'; // true
  */
-var roleHarvester = require('role.harvester');
-var roleName = "builder";
+var roleName = "janitor";
 var bodyParts = [WORK,CARRY,MOVE];
 var roleBuilder = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
 
-        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+        var targets = creep.room.find(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType == STRUCTURE_ROAD)
+                    && structure.hits <= 4500;
+            }
+        });
         if(targets.length){
-            if(creep.memory.building && creep.carry.energy == 0) {
-                creep.memory.building = false;
+            if(creep.memory.repairing && creep.carry.energy == 0) {
+                creep.memory.repairing = false;
                 creep.say('🔄 harvest');
             }
-    	    if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
-    	        creep.memory.building = true;
-    	        creep.say('🚧 build');
-    	    }
-    	    if(creep.memory.building) {
+            if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
+                creep.memory.building = true;
+                creep.say('🚧 build');
+            }
+            if(creep.memory.building) {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
-	        }else {
+            }else {
                 var stores = creep.room.find(FIND_STRUCTURES, {
                     filter: (structure) => {
                         return (structure.structureType == STRUCTURE_EXTENSION)
@@ -47,12 +51,12 @@ var roleBuilder = {
                         creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
                     }
                 }
-	        }
-	        
+            }
+
         }else{
             roleHarvester.run(creep);
         }
-	},
+    },
     spawn: function(spawner, version) {
         //Constructor
         var newName = roleName + Game.time;
