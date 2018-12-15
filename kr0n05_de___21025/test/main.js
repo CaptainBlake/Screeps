@@ -55,10 +55,10 @@ module.exports.loop = function () {
         {
             
         console.log('----' + Game.spawns['Spawn1'].room + '----');
-        console.log('Harvesters: ' + harvesters.length);
-        console.log('Builders: ' + builders.length);
-        console.log('Upgraders: ' + upgraders.length);
-        console.log('Janitors: ' + janitors.length);
+        console.log('Harvesters: ' + harvesters.length + ' / ' + maxHarvester);
+        console.log('Builders: ' + builders.length + ' / ' + maxBuilder);
+        console.log('Upgraders: ' + upgraders.length + ' / ' + maxUpgrader);
+        console.log('Janitors: ' + janitors.length + ' / ' + maxJanitor);
         console.log('/////////////////////////////////');
         }
     }
@@ -165,6 +165,7 @@ module.exports.loop = function () {
     //Tier 3
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         tasks.roadPlan();
+        prefabs.firstDefence(Game.spawns['Spawn1']);
         maxHarvester = 4;
         maxJanitor = 1;
         ++Memory.tier.level;
