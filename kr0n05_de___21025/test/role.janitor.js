@@ -9,12 +9,13 @@ var roleJanitor = {
     /** @param {Creep} creep **/
     run: function(creep) {
 
-        var targets = creep.room.find(FIND_STRUCTURES, {
+        const targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
                 return ((structure.structureType == STRUCTURE_ROAD && structure.hits <= 4500) || (structure.structureType == STRUCTURE_WALL && structure.hits <= 4500));
             }
         });
-        if(targets.length){
+        targets.sort((a,b) => a.hits - b.hits);
+        if(targets.length>0){
             if(creep.memory.repairing && creep.carry.energy == 0) {
                 creep.memory.repairing = false;
                 creep.say('🔄 harvest');
@@ -24,6 +25,7 @@ var roleJanitor = {
                 creep.say('🚧 repair');
             }
             if(creep.memory.repairing) {
+
                 if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }

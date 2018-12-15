@@ -97,24 +97,25 @@ module.exports.loop = function () {
         }
     }
 
+    //*Ugly but works*
     //Harvester-Spawn-Control
     if(harvesters.length < maxHarvester) {
         roleHarvester.spawn(Game.spawns['Spawn1'], version);
-    }else
-
-    //builder-Spawn-Control
-    if(builders.length < maxBuilder) {
-        roleBuilder.spawn(Game.spawns['Spawn1'], version);
-    }else
-
-    //upgrader-Spawn-Control
-    if(upgraders.length < maxUpgrader) {
-        roleUpgrader.spawn(Game.spawns['Spawn1'], version);
-    }
-
-    //janitor-Spawn-Control
-    if(janitors.length < maxJanitor) {
-        roleJanitor.spawn(Game.spawns['Spawn1'], version);
+    }else{
+        //builder-Spawn-Control
+        if(builders.length < maxBuilder) {
+            roleBuilder.spawn(Game.spawns['Spawn1'], version);
+        }else{
+            //upgrader-Spawn-Control
+            if(upgraders.length < maxUpgrader) {
+                roleUpgrader.spawn(Game.spawns['Spawn1'], version);
+            }else{
+                //janitor-Spawn-Control
+                if(janitors.length < maxJanitor) {
+                    roleJanitor.spawn(Game.spawns['Spawn1'], version);
+                }
+            }
+        }
     }
 
     //Role-Handler
@@ -144,7 +145,7 @@ module.exports.loop = function () {
     {align: 'center', opacity: 0.8});
 
     //Tier modes
-    var controllerlevel = creep.room.controller.level;
+    var controllerlevel =Game.spawns['Spawn1'].room.controller.level;
 
     //Tier 1
     if(Memory.tier.level == 0 && builders.length > 0){
