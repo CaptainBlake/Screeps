@@ -14,4 +14,4 @@ var rolePlanner = {
         }
     };
 
-module.exports = roleUpgrader;
+module.exports = rolePlanner;
