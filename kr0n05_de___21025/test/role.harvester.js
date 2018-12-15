@@ -43,7 +43,7 @@ var roleHarvester = {
         var src = Game.time%srcs.length;
         //Tier-Stages
         if(Memory.tier.level >= 3){
-            bodyParts = [WORK,CARRY,MOVE, MOVE];
+            bodyParts = [WORK,WORK,CARRY,CARRY,CARRY,CARRY,MOVE, MOVE];
         }
 
         //Spawn

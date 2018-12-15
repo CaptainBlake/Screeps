@@ -1,9 +1,12 @@
 /*
+     Coop Screeps AI - v.1.0
 
-     Coop Screeps AI
-
-     Main handles Tierstages, Controllers and AI Controll.
-     Further stuff will be added :3
+     Main handles:
+     -Vars
+     -Console Log
+     -Task Controller
+     -Spawn Controller
+     -Tier Controller
 
  */
 
@@ -18,10 +21,10 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleJanitor = require('role.janitor');
 //MaxRoles
-var maxBuilder = 2;
-var maxUpgrader = 2;
+var maxBuilder = 1;
+var maxUpgrader = 1;
 var maxHarvester = 2;
-var maxJanitor = 1;
+var maxJanitor = 0;
 //globals
 var version = 1.0;
 var logging = false;
@@ -152,6 +155,8 @@ module.exports.loop = function () {
     //Tier 2
     if(Memory.tier.level == 1 && controllerlevel >= 2){
         prefabs.firstExtention(Game.spawns['Spawn1']);
+        maxBuilder = 2;
+        maxUpgrader = 2;
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
@@ -160,6 +165,7 @@ module.exports.loop = function () {
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         tasks.roadPlan();
         maxHarvester = 4;
+        maxJanitor = 1;
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
@@ -170,10 +176,12 @@ module.exports.loop = function () {
         console.log('Reached Tier ' + Memory.tier.level);
     }
 
-    //AI CONTROLLER
+
+    //AI CONTROLLER (Needs to get Overhaul)
 
     //Tower Control
-    var tower; //undefined! implement me!
+    /*
+    var tower;
     if(tower) {
         //heal-mode
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
@@ -189,4 +197,5 @@ module.exports.loop = function () {
             tower.attack(closestHostile);
         }
     }
+    */
 };
