@@ -11,8 +11,7 @@ var roleJanitor = {
 
         var targets = creep.room.find(FIND_STRUCTURES, {
             filter: (structure) => {
-                return (structure.structureType == STRUCTURE_ROAD)
-                    && structure.hits <= 4500;
+                return ((structure.structureType == STRUCTURE_ROAD && structure.hits <= 4500) || (structure.structureType == STRUCTURE_WALL && structure.hits <= 4500));
             }
         });
         if(targets.length){
