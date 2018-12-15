@@ -2,7 +2,8 @@
 
      Coop Screeps AI
 
-     Main handles Tierstages, Controllers and
+     Main handles Tierstages, Controllers and AI Controll.
+     Further stuff will be added :3
 
  */
 
