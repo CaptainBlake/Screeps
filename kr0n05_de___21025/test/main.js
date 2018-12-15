@@ -64,6 +64,7 @@ module.exports.loop = function () {
         //Darwin
         if(Game.creeps[name] && Game.creeps[name].memory.ver != version){
             Game.creeps[name].suicide();
+            console.log(name + 'was killed by Darwin');
         }
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
