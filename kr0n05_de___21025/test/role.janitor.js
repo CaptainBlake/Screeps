@@ -6,6 +6,7 @@
  * var mod = require('role.builder');
  * mod.thing == 'a thing'; // true
  */
+var roleHarvester = require('role.harvester');
 var roleName = "janitor";
 var bodyParts = [WORK,CARRY,MOVE];
 var roleJanitor = {
