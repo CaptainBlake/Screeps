@@ -8,50 +8,42 @@ var roleJanitor = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+        if(creep.memory.repairing && creep.carry.energy == 0) {
+            creep.memory.repairing = false;
+            creep.say('🔄 harvest');
+        }
+        if(!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.repairing = true;
+            creep.say('🚧 repair');
+        }
+        if(creep.memory.repairing) {
 
-        const targets = creep.room.find(FIND_STRUCTURES, {
-            filter: (structure) => {
-                return ((structure.structureType == STRUCTURE_ROAD && structure.hits <= 4500) || (structure.structureType == STRUCTURE_WALL && structure.hits <= 4500));
+            const targets = creep.room.find(FIND_STRUCTURES, {
+                filter: object => object.hits < object.hitsMax
+            });
+            targets.sort((a,b) => a.hits - b.hits);
+            if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
             }
-        });
-        targets.sort((a,b) => a.hits - b.hits);
-        if(targets.length>0){
-            if(creep.memory.repairing && creep.carry.energy == 0) {
-                creep.memory.repairing = false;
-                creep.say('🔄 harvest');
-            }
-            if(!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
-                creep.memory.repairing = true;
-                creep.say('🚧 repair');
-            }
-            if(creep.memory.repairing) {
-
-                if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+        }else {
+            var stores = creep.room.find(FIND_STRUCTURES, {
+                filter: (structure) => {
+                    return (structure.structureType == STRUCTURE_EXTENSION)
+                        && structure.energy != 0;
                 }
-            }else {
-                var stores = creep.room.find(FIND_STRUCTURES, {
-                    filter: (structure) => {
-                        return (structure.structureType == STRUCTURE_EXTENSION)
-                            && structure.energy != 0;
-                    }
-                });
-                if(stores.length > 0) {
-                    creep.say('pick up');
-                    if(creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                    }
-                }else{
-                    var sources = creep.room.find(FIND_SOURCES);
-                    creep.say('⛏');
-                    if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
-                    }
+            });
+            if (stores.length > 0) {
+                creep.say('pick up');
+                if (creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
+                }
+            } else {
+                var sources = creep.room.find(FIND_SOURCES);
+                creep.say('⛏');
+                if (creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
-
-        }else{
-            roleHarvester.run(creep);
         }
     },
     spawn: function(spawner, version) {
@@ -61,7 +53,7 @@ var roleJanitor = {
         var src = Game.time%srcs.length;
         //Tier-Stages
         if(Memory.tier.level >= 3){
-            bodyParts = [WORK,CARRY,MOVE, MOVE];
+            bodyParts = [WORK,CARRY,CARRY,MOVE];
         }
 
         //Spawn

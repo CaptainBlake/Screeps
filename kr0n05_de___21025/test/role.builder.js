@@ -56,7 +56,7 @@ var roleBuilder = {
         var src = Game.time%srcs.length;
         //Tier-Stages
         if(Memory.tier.level >= 3){
-            bodyParts = [WORK,CARRY,MOVE, MOVE];
+            bodyParts = [WORK,WORK,CARRY,MOVE,MOVE];
         }
 
         //Spawn

@@ -101,22 +101,22 @@ module.exports.loop = function () {
     //Harvester-Spawn-Control
     if(harvesters.length < maxHarvester) {
         roleHarvester.spawn(Game.spawns['Spawn1'], version);
-    }else{
-        //builder-Spawn-Control
-        if(builders.length < maxBuilder) {
-            roleBuilder.spawn(Game.spawns['Spawn1'], version);
-        }else{
-            //upgrader-Spawn-Control
-            if(upgraders.length < maxUpgrader) {
-                roleUpgrader.spawn(Game.spawns['Spawn1'], version);
-            }else{
-                //janitor-Spawn-Control
-                if(janitors.length < maxJanitor) {
-                    roleJanitor.spawn(Game.spawns['Spawn1'], version);
-                }
-            }
-        }
+    }else
+    //builder-Spawn-Control
+    if(builders.length < maxBuilder) {
+        roleBuilder.spawn(Game.spawns['Spawn1'], version);
+    }else
+    //upgrader-Spawn-Control
+    if(upgraders.length < maxUpgrader) {
+        roleUpgrader.spawn(Game.spawns['Spawn1'], version);
+    }else
+    //janitor-Spawn-Control
+    if(janitors.length < maxJanitor) {
+        roleJanitor.spawn(Game.spawns['Spawn1'], version);
     }
+
+
+
 
     //Role-Handler
     for(var name in Game.creeps) {

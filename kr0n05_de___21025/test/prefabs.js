@@ -26,7 +26,7 @@ var prefabs = {
             Spawner.pos.y + 2,
             STRUCTURE_EXTENSION);
     }
-    
+
 };
 
 module.exports = prefabs;
