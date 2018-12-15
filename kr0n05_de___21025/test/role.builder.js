@@ -7,6 +7,7 @@
  * mod.thing == 'a thing'; // true
  */
 var roleHarvester = require('role.harvester');
+var bodyParts = [WORK,CARRY,MOVE];
 var roleBuilder = {
 
     /** @param {Creep} creep **/
@@ -51,7 +52,22 @@ var roleBuilder = {
         }else{
             roleHarvester.run(creep);
         }
-	}
+	},
+    spawn: function(spawner, builders, version) {
+        var newName = 'Builder' + Game.time;
+        var srcs = spawner.room.find(FIND_SOURCES);
+        if(builders.length > 0){
+            var src = (builders[builders.length-1].memory.source + 1)%srcs.length;
+        }else{
+            var src = 0;
+        }
+        if(Memory.tier.level >= 3){
+            bodyParts = [WORK,CARRY,MOVE, MOVE];
+        }
+        if(spawner.spawnCreep(bodyParts, newName,{memory: {role: 'builder', source: src, ver: version}}) >= 0){
+            console.log('Spawning new Builder: ' + newName);
+        }
+    }
 };
 
 module.exports = roleBuilder;

@@ -32,7 +32,7 @@ module.exports.loop = function () {
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
         
     //Console logs
-    if(logging == true){
+    if(logging){
         console.log('----' + Game.spawns['Spawn1'].room + '----');
         console.log('Harvesters: ' + harvesters.length);
         console.log('Builders: ' + builders.length);
@@ -81,16 +81,7 @@ module.exports.loop = function () {
     
     //builder-Spawn-Control
     if(builders.length < maxBuilder) {
-        var newName = 'Builder' + Game.time;
-        var srcs = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
-        if(builders.length > 0){
-        var src = (builders[builders.length-1].memory.source + 1)%srcs.length;
-        }else{
-            var src = 0;
-        }
-        if(Game.spawns['Spawn1'].spawnCreep(bodyParts, newName,{memory: {role: 'builder', source: src, ver: version}}) >= 0){
-            console.log('Spawning new Builder: ' + newName);
-        }
+        roleBuilder.spawn(Game.spawns['Spawn1'], builders, version);
     }else
     
     //upgrader-Spawn-Control
