@@ -7,13 +7,16 @@ var rolePlanner = require('role.planner');
 if(!Memory.tier){
     Memory.tier = {level: 0};
 }
+if(!Memory.tier.plannedToCont){
+    Memory.tier.plannedToCont = false;
+}
+
 
 var maxBuilder = 2;
 var maxUpgrader = 2;
 var maxHarvester = 2;
 
 var logging = false;
-var planning = false;
 var bodyParts = [WORK,CARRY,MOVE];
 
 module.exports.loop = function () {
@@ -171,18 +174,18 @@ module.exports.loop = function () {
     //Tier 3
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         maxHarvester = 4;
-        if(!planning && (Game.spawns['Spawn1'].spawnCreep([MOVE], 'toController',{memory: {planToCon: true, role: 'planner', ver: version}}) >= 0)){
-            console.log('Spawning new planner: toController');
-            planning = true;
-        }
         ++Memory.tier.level;
 
         console.log('Reached Tier ' + Memory.tier.level);
     }
-
+    if(!Memory.tier.plannedToCont && Memory.tier.level >=2 ){
+        if((Game.spawns['Spawn1'].spawnCreep([MOVE], 'toController',{memory: {planToCon: true, role: 'planner', ver: version}}) >= 0)){
+            console.log('Spawning new planner: toController');
+            Memory.tier.plannedToCont = true;
+        }
+    }
     //Tier 4
     if(Memory.tier.level == 3 && controllerlevel >= 3){
-        planning = false;
         bodyParts = [WORK,CARRY,MOVE, MOVE];
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
