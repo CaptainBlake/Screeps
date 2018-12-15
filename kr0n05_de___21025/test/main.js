@@ -17,7 +17,7 @@ var tasks = require('tasks');
 
 var maxBuilder = 2;
 var maxUpgrader = 2;
-var maxHarvester = 3;
+var maxHarvester = 2;
 var maxJanitor = 1;
 var logging = true;
 var bodyParts = [WORK,CARRY,MOVE];
