@@ -30,6 +30,8 @@ module.exports.loop = function () {
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
+    var creeplist = _.filter(Game.creeps);
+
         
     //Console logs
     if(logging){
@@ -81,7 +83,7 @@ module.exports.loop = function () {
     
     //builder-Spawn-Control
     if(builders.length < maxBuilder) {
-        roleBuilder.spawn(Game.spawns['Spawn1'], builders, version);
+        roleBuilder.spawn(Game.spawns['Spawn1'], creeplist, version);
     }else
     
     //upgrader-Spawn-Control

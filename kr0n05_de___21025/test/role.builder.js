@@ -53,17 +53,21 @@ var roleBuilder = {
             roleHarvester.run(creep);
         }
 	},
-    spawn: function(spawner, builders, version) {
+    spawn: function(spawner, creeplist, version) {
+        //Constructor
         var newName = 'Builder' + Game.time;
         var srcs = spawner.room.find(FIND_SOURCES);
-        if(builders.length > 0){
-            var src = (builders[builders.length-1].memory.source + 1)%srcs.length;
+        if(creeplist.length > 0){
+            var src = (creeplist[creeplist.length-1].memory.source + 1)%srcs.length;
         }else{
             var src = 0;
         }
+        //Tier-Stages
         if(Memory.tier.level >= 3){
             bodyParts = [WORK,CARRY,MOVE, MOVE];
         }
+
+        //Spawn
         if(spawner.spawnCreep(bodyParts, newName,{memory: {role: 'builder', source: src, ver: version}}) >= 0){
             console.log('Spawning new Builder: ' + newName);
         }
