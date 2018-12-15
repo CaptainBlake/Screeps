@@ -136,15 +136,15 @@ module.exports.loop = function () {
     {align: 'center', opacity: 0.8});
 
     //Tier modes
-
-    //Tier 0
+    var controllerlevel = creep.room.controller.level;
+    //Tier 1
     if(Memory.tier.level == 0 && builders.length > 0){
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
 
-    //Tier 1
-    if(Memory.tier.level == 1){
+    //Tier 2
+    if(Memory.tier.level == 1 && controllerlevel >= 2){
         Game.spawns['Spawn1'].room.createConstructionSite(
             Game.spawns['Spawn1'].pos.x + 2, 
             Game.spawns['Spawn1'].pos.y - 2,
@@ -169,15 +169,15 @@ module.exports.loop = function () {
         console.log('Reached Tier ' + Memory.tier.level);
     }
 
-    //Tier 2
-    if(Memory.tier.level == 2){
+    //Tier 3
+    if(Memory.tier.level == 2 && controllerlevel >= 3){
         maxHarvester = 4;
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
 
-    //Tier 3
-    if(Memory.tier.level == 3 && extCount.length >= 5){
+    //Tier 4
+    if(Memory.tier.level == 3 && extCount.length >= 5 && controllerlevel >= 4){
         bodyParts = [WORK,CARRY,MOVE, MOVE];
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
