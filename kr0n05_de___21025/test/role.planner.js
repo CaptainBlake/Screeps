@@ -1,4 +1,7 @@
-
+/*
+ * [EXPERIMENTAL]
+ * Planer runs to a specific position and keeps placing Road-Constructionsites on the way.
+ */
 var rolePlanner = {
 
     /** @param {Creep} creep **/

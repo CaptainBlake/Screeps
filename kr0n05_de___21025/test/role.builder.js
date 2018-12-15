@@ -1,10 +1,6 @@
 /*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('role.builder');
- * mod.thing == 'a thing'; // true
+ * Builder searches for Constructionsites within the room and tries to complete them.
+ * Switches to Janitor-mode when hes IDLE
  */
 var roleJanitor = require('role.janitor');
 var roleName = "builder";

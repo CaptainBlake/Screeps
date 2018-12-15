@@ -1,10 +1,24 @@
+/*
+
+     Coop Screeps AI
+
+     Main handles Tierstages, Controllers and
+
+ */
+
+//Vars
 var version = 1.0;
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var rolePlanner = require('role.planner');
 var roleJanitor = require('role.janitor');
-
+var maxBuilder = 2;
+var maxUpgrader = 2;
+var maxHarvester = 2;
+var maxJanitor = 1;
+var logging = false;
+var bodyParts = [WORK,CARRY,MOVE];
 if(!Memory.tier){
     Memory.tier = {level: 0};
 }
@@ -12,32 +26,18 @@ if(!Memory.tier.plannedToCont){
     Memory.tier.plannedToCont = false;
 }
 
-
-var maxBuilder = 2;
-var maxUpgrader = 2;
-var maxHarvester = 2;
-var maxJanitor = 1;
-
-var logging = false;
-var bodyParts = [WORK,CARRY,MOVE];
-
 module.exports.loop = function () {
 
-
-    /*
-
-        Coop Screeps AI
-
-        *Desc here*
-
-    */
-
-
-    //OUTPUTS AND VALS
+    //Lists
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
     var janitors = _.filter(Game.creeps, (creep) => creep.memory.role === 'janitor');
+    var extCount = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {
+        filter: (structure) => {
+            return (structure.structureType == STRUCTURE_EXTENSION);
+        }
+    });
 
     //Console logs
     if(logging){
@@ -48,6 +48,8 @@ module.exports.loop = function () {
         console.log('Janitors: ' + janitors.length);
         console.log('/////////////////////////////////');
     }
+
+    //SPAWN CONTROLLER
 
     //Spawn icon
     if(Game.spawns['Spawn1'].spawning) {
@@ -64,15 +66,13 @@ module.exports.loop = function () {
         //Darwin
         if(Game.creeps[name] && Game.creeps[name].memory.ver != version){
             Game.creeps[name].suicide();
-            console.log(name + 'was killed by Darwin');
+            console.log('Der Darwinismus hat: ' + name + ' unter die Erde gebracht!');
         }
         if(!Game.creeps[name]) {
             delete Memory.creeps[name];
             console.log(name + ' died!');
         }
     }
-
-    //SPAWN CONTROLLER
 
     //Harvester-Spawn-Control
     if(harvesters.length < maxHarvester) {
@@ -93,6 +93,7 @@ module.exports.loop = function () {
     if(janitors.length < maxJanitor) {
         roleJanitor.spawn(Game.spawns['Spawn1'], version);
     }
+
     //Role-Handler
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
@@ -113,14 +114,9 @@ module.exports.loop = function () {
         }
     }
 
-    //AI CONTROLL
-    var extCount = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {
-                    filter: (structure) => {
-                        return (structure.structureType == STRUCTURE_EXTENSION);
-                    }
-                });
+    //TIER CONTROLL
 
-    //Tier display
+    //Tier Display
     Game.spawns['Spawn1'].room.visual.text(
     'Tier️' +Memory.tier.level,
     Game.spawns['Spawn1'].pos.x,
@@ -180,7 +176,9 @@ module.exports.loop = function () {
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
-    
+
+    //AI CONTROLLER
+
     //Tower Control
     var tower = Game.getObjectById('c8e832f3f947cacb7ad0656d');
     if(tower) {

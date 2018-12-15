@@ -1,3 +1,7 @@
+/*
+ * Upgrader stays @the RoomController and keeps pushing it up. Can switch Roles with low priority
+ */
+
 var roleName = "upgrader";
 var roleUpgrader = {
 
