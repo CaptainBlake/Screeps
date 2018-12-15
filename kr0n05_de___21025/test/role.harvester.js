@@ -4,6 +4,7 @@
  */
 var roleUpgrader = require('role.upgrader');
 var roleName = "harvester";
+var bodyParts = [WORK,CARRY,MOVE];
 var roleHarvester = {
 
     /** @param {Creep} creep **/

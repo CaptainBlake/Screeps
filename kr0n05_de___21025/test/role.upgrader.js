@@ -3,6 +3,7 @@
  */
 
 var roleName = "upgrader";
+var bodyParts = [WORK,CARRY,MOVE];
 var roleUpgrader = {
 
 	/** @param {Creep} creep **/
