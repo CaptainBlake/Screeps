@@ -7,18 +7,23 @@
 
  */
 
-//Vars
-var version = 1.0;
+//VARS
+
+//Extentions
+var tasks = require('tasks');
+var prefabs = require('prefabs');
+//Roles
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleJanitor = require('role.janitor');
-var tasks = require('tasks');
-
+//MaxRoles
 var maxBuilder = 2;
 var maxUpgrader = 2;
 var maxHarvester = 2;
 var maxJanitor = 1;
+//globals
+var version = 1.0;
 var logging = false;
 var bodyParts = [WORK,CARRY,MOVE];
 if(!Memory.tier){
@@ -52,6 +57,15 @@ module.exports.loop = function () {
         console.log('Upgraders: ' + upgraders.length);
         console.log('Janitors: ' + janitors.length);
         console.log('/////////////////////////////////');
+        }
+    }
+
+    //TASK CONTROLLER
+
+    //Tasklist
+    if(Memory.tier.level >= 3){
+        if(Game.time%1000==0){
+            tasks.roadPlan();
         }
     }
 
@@ -137,35 +151,16 @@ module.exports.loop = function () {
 
     //Tier 2
     if(Memory.tier.level == 1 && controllerlevel >= 2){
-        Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x + 2,
-            Game.spawns['Spawn1'].pos.y - 2,
-            STRUCTURE_EXTENSION);
-        Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x + 2,
-            Game.spawns['Spawn1'].pos.y + 2,
-            STRUCTURE_EXTENSION);
-        Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x - 2,
-            Game.spawns['Spawn1'].pos.y - 2,
-            STRUCTURE_EXTENSION);
-        Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x - 2,
-            Game.spawns['Spawn1'].pos.y + 2,
-            STRUCTURE_EXTENSION);
-        Game.spawns['Spawn1'].room.createConstructionSite(
-            Game.spawns['Spawn1'].pos.x,
-            Game.spawns['Spawn1'].pos.y + 2,
-            STRUCTURE_EXTENSION);
+        prefabs.firstExtention(Game.spawns['Spawn1']);
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
 
     //Tier 3
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
+        tasks.roadPlan();
         maxHarvester = 4;
         ++Memory.tier.level;
-        tasks.roadPlan();
         console.log('Reached Tier ' + Memory.tier.level);
     }
     //Tier 4
@@ -178,7 +173,7 @@ module.exports.loop = function () {
     //AI CONTROLLER
 
     //Tower Control
-    var tower = Game.getObjectById('c8e832f3f947cacb7ad0656d');
+    var tower; //undefined! implement me!
     if(tower) {
         //heal-mode
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {

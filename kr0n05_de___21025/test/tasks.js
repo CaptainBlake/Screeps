@@ -1,5 +1,5 @@
 /*
- * Task implements various Jobs which can be done frequently,
+ * Task implements various Jobs which can be done frequently
  */
 
 var tasks = {
