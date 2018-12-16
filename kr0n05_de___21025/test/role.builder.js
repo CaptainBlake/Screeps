@@ -16,11 +16,13 @@ var roleBuilder = {
             if(creep.memory.building && creep.carry.energy == 0) {
                 creep.memory.building = false;
                 creep.memory.job = ('🛒 get');
+                creep.memory.begin = Game.time;
             }
     	    if(!creep.memory.building && creep.carry.energy == creep.carryCapacity) {
     	        creep.memory.building = true;
                 creep.memory.job = ('🚧 build');
-    	    }
+                creep.memory.begin = Game.time;
+            }
     	    if(creep.memory.building) {
                 if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});

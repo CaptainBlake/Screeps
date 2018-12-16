@@ -12,10 +12,12 @@ var roleJanitor = {
         if(creep.memory.repairing && creep.carry.energy == 0) {
             creep.memory.repairing = false;
             creep.memory.job = ('⚒ harvest');
+            creep.memory.begin = Game.time;
         }
         if(!creep.memory.repairing && creep.carry.energy == creep.carryCapacity) {
             creep.memory.repairing = true;
             creep.memory.job = ('🚧 repair');
+            creep.memory.begin = Game.time;
         }
         if(creep.memory.repairing) {
 

@@ -115,7 +115,7 @@ module.exports.loop = function () {
             {align: 'left', opacity: 0.8});
         for(var creep in CreepList){
             Game.spawns['Spawn1'].room.visual.text(
-                (parseInt(creep)+1).toString().padStart((CreepList.length).toString().length , "0") + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job,
+                (parseInt(creep)+1).toString().padStart((CreepList.length).toString().length ,"0") + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job + " for " + (Game.time - Game.creeps[CreepList[creep]].memory.begin) + " ticks.",
                 0,
                 parseInt(creep)+1,
                 {align: 'left', opacity: 0.8});

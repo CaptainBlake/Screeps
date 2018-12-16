@@ -13,10 +13,12 @@ var roleHarvester = {
         if(!creep.memory.harvesting && creep.carry.energy == 0) {
             creep.memory.harvesting = true;
             creep.memory.job = ('⚒ harvest');
+            creep.memory.begin = Game.time;
         }
         if(creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
             creep.memory.harvesting = false;
             creep.memory.job = ('🤮 drain');
+            creep.memory.begin = Game.time;
         }
 
 
@@ -59,7 +61,7 @@ var roleHarvester = {
         }
 
         //Spawn
-        if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version, job : '⚒ harvest'}}) >= 0){
+        if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version, job : '⚒ harvest', begin : Game.time}}) >= 0){
             console.log('Spawning new ' + roleName + ' ' + newName + " for the cost of " + tasks.bodyCost(bodyParts));
 
         }
