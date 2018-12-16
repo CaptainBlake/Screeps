@@ -2,6 +2,7 @@
  * Upgrader stays @the RoomController and keeps pushing it up. Can switch Roles with low priority
  */
 
+var tasks = require('tasks');
 var roleName = "upgrader";
 var bodyParts = [WORK,CARRY,MOVE];
 var roleUpgrader = {
@@ -50,13 +51,13 @@ var roleUpgrader = {
         var srcs = spawner.room.find(FIND_SOURCES);
         var src = Game.time%srcs.length;
         //Tier-Stages
-        if(Memory.tier.level >= 3){
-            bodyParts = [WORK,WORK,CARRY,CARRY,MOVE];
+        var t3bodyParts = [WORK,WORK,CARRY,CARRY,MOVE];
+        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
+            bodyParts = t3bodyParts;
         }
-
         //Spawn
         if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version}}) >= 0){
-            console.log('Spawning new ' + roleName + ' ' + newName);
+            console.log('Spawning new ' + roleName + ' ' + newName + " for the cost of " + tasks.bodyCost(bodyParts));
         }
     }
 };

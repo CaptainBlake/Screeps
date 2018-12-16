@@ -2,6 +2,7 @@
  * Builder searches for Constructionsites within the room and tries to complete them.
  * Switches to Janitor-mode when hes IDLE
  */
+var tasks = require('tasks');
 var roleJanitor = require('role.janitor');
 var roleName = "builder";
 var bodyParts = [WORK,CARRY,MOVE];
@@ -51,13 +52,14 @@ var roleBuilder = {
         var srcs = spawner.room.find(FIND_SOURCES);
         var src = Game.time%srcs.length;
         //Tier-Stages
-        if(Memory.tier.level >= 3){
-            bodyParts = [WORK,WORK,CARRY,MOVE,MOVE];
+        var t3bodyParts = [WORK,WORK,CARRY,MOVE,MOVE];
+        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
+            bodyParts = t3bodyParts;
         }
 
         //Spawn
         if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version}}) >= 0){
-            console.log('Spawning new ' + roleName + ' ' + newName);
+            console.log('Spawning new ' + roleName + ' ' + newName + " for the cost of " + tasks.bodyCost(bodyParts));
         }
     }
 };

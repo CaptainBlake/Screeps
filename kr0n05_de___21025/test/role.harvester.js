@@ -2,6 +2,7 @@
  * Harvester runs between Source-nodes and Structures which contains energy to store them
  * Could become Upgrader when IDLE (low-chance / poor implementation)
  */
+var tasks = require('tasks');
 var roleUpgrader = require('role.upgrader');
 var roleName = "harvester";
 var bodyParts = [WORK,CARRY,MOVE];
@@ -22,7 +23,6 @@ var roleHarvester = {
 	    if(creep.memory.harvesting) {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
-                creep.say('⛏');
                 creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
                 
             }
@@ -51,13 +51,15 @@ var roleHarvester = {
         var srcs = spawner.room.find(FIND_SOURCES);
         var src = Game.time%srcs.length;
         //Tier-Stages
-        if(Memory.tier.level >= 3){
-            bodyParts = [WORK,WORK,WORK,CARRY,MOVE];
+        var t3bodyParts = [WORK,WORK,WORK,CARRY,MOVE];
+        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
+            bodyParts = t3bodyParts;
         }
 
         //Spawn
         if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version}}) >= 0){
-            console.log('Spawning new ' + roleName + ' ' + newName);
+            console.log('Spawning new ' + roleName + ' ' + newName + " for the cost of " + tasks.bodyCost(bodyParts));
+
         }
     }
 };
