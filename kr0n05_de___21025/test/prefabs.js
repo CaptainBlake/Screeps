@@ -40,6 +40,40 @@ var prefabs = {
          *  + 5 extentions
          *  + 1-2 container near road
          */
+         
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x - 4,
+            Spawner.pos.y + 1,
+            STRUCTURE_EXTENSION);
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x + 4,
+            Spawner.pos.y + 1,
+            STRUCTURE_EXTENSION);
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x - 4,
+            Spawner.pos.y - 1,
+            STRUCTURE_EXTENSION);
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x + 4,
+            Spawner.pos.y - 1,
+            STRUCTURE_EXTENSION);
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x + 4,
+            Spawner.pos.y,
+            STRUCTURE_EXTENSION);
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x - 4,
+            Spawner.pos.y,
+            STRUCTURE_EXTENSION);
+        
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x - 1,
+            Spawner.pos.y,
+            STRUCTURE_CONTAINER);
+        Spawner.room.createConstructionSite(
+            Spawner.pos.x + 1,
+            Spawner.pos.y,
+            STRUCTURE_CONTAINER);   
     }
 
 };
