@@ -99,14 +99,20 @@ module.exports.loop = function () {
     }
 
     // display
-    var i = 0;
-    for(var name in Memory.creeps){
+
+    var CreepList = [];
+    for (var creepname in Memory.creeps){
+        if (Game.creeps[creepname].room == Game.spawns['Spawn1'].room){
+            CreepList.push(Game.creeps[creepname].name);
+        }
+    }
+    for(var creep in CreepList){
         Game.spawns['Spawn1'].room.visual.text(
-            name + " doing " + Game.creeps[name].memory.job,
+            parseInt(creep) + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job,
             0,
-            i,
+            parseInt(creep),
             {align: 'left', opacity: 0.8});
-        i++;
+        //creep.say(i);
     }
 
     //*Ugly but works*
