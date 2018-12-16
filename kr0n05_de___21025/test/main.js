@@ -199,7 +199,7 @@ module.exports.loop = function () {
         console.log('Reached Tier ' + Memory.tier.level);
     }
     if(Memory.tier.level >=3){
-        maxHarvester = 4;
+        maxHarvester = 5;
         maxJanitor = 1;
     }
     //Tier 4
