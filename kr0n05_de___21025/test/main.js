@@ -107,13 +107,18 @@ module.exports.loop = function () {
                 CreepList.push(Game.creeps[creepname].name);
             }
         }
+        Game.spawns['Spawn1'].room.visual.text(
+            "count: " + CreepList.length,
+            0,
+            0,
+            {align: 'left', opacity: 0.8});
         for(var creep in CreepList){
             Game.spawns['Spawn1'].room.visual.text(
-                parseInt(creep) + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job,
+                parseInt(creep)+1 + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job,
                 0,
-                parseInt(creep),
+                parseInt(creep)+1,
                 {align: 'left', opacity: 0.8});
-            Game.creeps[CreepList[creep]].say(parseInt(creep));
+            Game.creeps[CreepList[creep]].say(parseInt(creep)+1);
         }
     }
 
