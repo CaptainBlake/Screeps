@@ -220,11 +220,17 @@ module.exports.loop = function () {
     //Tower AI (attack only)
     function defendRoom(roomName) {
         var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
+        var damaged = Game.rooms[roomName].find(FIND_MY_STRUCTURES);
         if(hostiles.length > 0) {
             var towers = Game.rooms[roomName].find(
                 FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
             towers.forEach(tower => tower.attack(hostiles[0]));
             Memory.defended.count++;
+        }
+        if(damaged.length > 0){
+            var towers = Game.rooms[roomName].find(
+                FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
+             towers.forEach(tower => tower.repair(damaged[0]));
         }
     }
 };
