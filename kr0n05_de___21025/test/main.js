@@ -210,6 +210,8 @@ module.exports.loop = function () {
 
 
     //AI CONTROLLER
+
+    //Tower AI (attack only)
     function defendRoom(roomName) {
         var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
         if(hostiles.length > 0) {
@@ -218,7 +220,4 @@ module.exports.loop = function () {
             towers.forEach(tower => tower.attack(hostiles[0]));
         }
     }
-    //Tower AI (attack only)
-
-
 };
