@@ -32,6 +32,14 @@ var prefabs = {
             Spawner.pos.x,
             Spawner.pos.y - 4,
             STRUCTURE_TOWER);
+    },
+    //The second TIER 3 Extention
+    secondExtention: function(Spawner) {
+        /*
+         *  implement prefab here
+         *  + 5 extentions
+         *  + 1-2 container near road
+         */
     }
 
 };
