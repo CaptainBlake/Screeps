@@ -62,6 +62,16 @@ module.exports.loop = function () {
         console.log('/////////////////////////////////');
         }
     }
+    // display
+    var i = 0;
+    for(var name in Memory.creeps){
+        Game.spawns['Spawn1'].room.visual.text(
+            name + " doing " + Game.creeps[name].memory.job,
+            0,
+            i,
+            {align: 'left', opacity: 0.8});
+        i++;
+    }
 
     //TASK CONTROLLER
 
