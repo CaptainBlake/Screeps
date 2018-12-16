@@ -29,6 +29,7 @@ var maxJanitor = 0;
 //globals
 var version = 1.0;
 var logging = false;
+var display = true;
 if(!Memory.tier){
     Memory.tier = {level: 0};
 }
@@ -99,20 +100,21 @@ module.exports.loop = function () {
     }
 
     // display
-
-    var CreepList = [];
-    for (var creepname in Memory.creeps){
-        if (Game.creeps[creepname].room == Game.spawns['Spawn1'].room){
-            CreepList.push(Game.creeps[creepname].name);
+    if(display){
+        var CreepList = [];
+        for (var creepname in Memory.creeps){
+            if (Game.creeps[creepname].room == Game.spawns['Spawn1'].room){
+                CreepList.push(Game.creeps[creepname].name);
+            }
         }
-    }
-    for(var creep in CreepList){
-        Game.spawns['Spawn1'].room.visual.text(
-            parseInt(creep) + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job,
-            0,
-            parseInt(creep),
-            {align: 'left', opacity: 0.8});
-        Game.creeps[CreepList[creep]].say(parseInt(creep));
+        for(var creep in CreepList){
+            Game.spawns['Spawn1'].room.visual.text(
+                parseInt(creep) + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job,
+                0,
+                parseInt(creep),
+                {align: 'left', opacity: 0.8});
+            Game.creeps[CreepList[creep]].say(parseInt(creep));
+        }
     }
 
     //*Ugly but works*
