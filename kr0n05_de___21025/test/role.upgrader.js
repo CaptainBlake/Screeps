@@ -56,7 +56,7 @@ var roleUpgrader = {
             bodyParts = t3bodyParts;
         }
         //Spawn
-        if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version}}) >= 0){
+        if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version, job : '⚒ harvest'}}) >= 0){
             console.log('Spawning new ' + roleName + ' ' + newName + " for the cost of " + tasks.bodyCost(bodyParts));
         }
     }
