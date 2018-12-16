@@ -29,7 +29,6 @@ var maxJanitor = 0;
 //globals
 var version = 1.0;
 var logging = false;
-var bodyParts = [WORK,CARRY,MOVE];
 if(!Memory.tier){
     Memory.tier = {level: 0};
 }
@@ -168,6 +167,7 @@ module.exports.loop = function () {
     //Tier 3
     if(Memory.tier.level == 2 && controllerlevel >= 2 &&  extCount.length >= 5){
         tasks.roadPlan();
+        prefabs.secondExtention(Game.spawns['Spawn1']);
         prefabs.firstDefence(Game.spawns['Spawn1']);
         maxHarvester = 4;
         maxJanitor = 1;
@@ -175,8 +175,7 @@ module.exports.loop = function () {
         console.log('Reached Tier ' + Memory.tier.level);
     }
     //Tier 4
-    if(Memory.tier.level == 3 && controllerlevel >= 3){
-        bodyParts = [WORK,CARRY,MOVE, MOVE];
+    if(Memory.tier.level == 3 && controllerlevel >= 3 && extCount.length >=10){
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
