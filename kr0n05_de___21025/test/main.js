@@ -174,10 +174,12 @@ module.exports.loop = function () {
     //Tier 2
     if(Memory.tier.level == 1 && controllerlevel >= 2){
         prefabs.firstExtention(Game.spawns['Spawn1']);
-        maxBuilder = 2;
-        maxUpgrader = 2;
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
+    }
+    if(Memory.tier.level >=2){
+        maxBuilder = 2;
+        maxUpgrader = 2;
     }
 
     //Tier 3
@@ -185,10 +187,12 @@ module.exports.loop = function () {
         tasks.roadPlan();
         prefabs.secondExtention(Game.spawns['Spawn1']);
         prefabs.firstDefence(Game.spawns['Spawn1']);
-        maxHarvester = 4;
-        maxJanitor = 1;
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
+    }
+    if(Memory.tier.level >=3){
+        maxHarvester = 4;
+        maxJanitor = 1;
     }
     //Tier 4
     if(Memory.tier.level == 3 && controllerlevel >= 3 && extCount.length >=10){
