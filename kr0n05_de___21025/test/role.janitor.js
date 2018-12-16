@@ -27,6 +27,10 @@ var roleJanitor = {
             targets.sort((a,b) => a.hits - b.hits);
             if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+                //make it easier to see where the janitor is going (debug purpose for target prio)
+                Game.spawns['Spawn1'].room.visual.circle(
+                    creep.memory._move.dest.x,
+                    creep.memory._move.dest.y);
             }
         }else {
             var stores = creep.room.find(FIND_STRUCTURES, {
