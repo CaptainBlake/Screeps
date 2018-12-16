@@ -112,7 +112,7 @@ module.exports.loop = function () {
             0,
             parseInt(creep),
             {align: 'left', opacity: 0.8});
-        //creep.say(i);
+        Game.creeps[CreepList[creep]].say(parseInt(creep));
     }
 
     //*Ugly but works*
