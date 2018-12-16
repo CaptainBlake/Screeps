@@ -9,15 +9,24 @@ var roleHarvester = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-	    if(creep.carry.energy < creep.carryCapacity) {
+        if(!creep.memory.harvesting && creep.carry.energy == 0) {
+            creep.memory.harvesting = true;
+            creep.say('🔄 harvest');
+        }
+        if(creep.memory.harvesting && creep.carry.energy == creep.carryCapacity) {
+            creep.memory.harvesting = false;
+            creep.say('🚧 drain');
+        }
+
+
+	    if(creep.memory.harvesting) {
             var sources = creep.room.find(FIND_SOURCES);
             if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
                 creep.say('⛏');
                 creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
                 
             }
-        }
-        else {
+        }else {
             var targets = creep.room.find(FIND_STRUCTURES, {
                     filter: (structure) => {
                         return (structure.structureType == STRUCTURE_EXTENSION ||
@@ -31,8 +40,8 @@ var roleHarvester = {
                 }
             }else{
                     //Harvesters are now upgraders if they have nothing to do
-                    roleUpgrader.run(creep);
-                    //creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
+                    //roleUpgrader.run(creep);
+                    creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
         }
 	},
@@ -43,7 +52,7 @@ var roleHarvester = {
         var src = Game.time%srcs.length;
         //Tier-Stages
         if(Memory.tier.level >= 3){
-            bodyParts = [WORK,CARRY,CARRY,CARRY,MOVE];
+            bodyParts = [WORK,WORK,WORK,CARRY,MOVE];
         }
 
         //Spawn

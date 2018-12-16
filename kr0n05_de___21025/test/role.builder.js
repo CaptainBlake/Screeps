@@ -37,12 +37,8 @@ var roleBuilder = {
                         creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
                     }
                 }else{
-                    var sources = creep.room.find(FIND_SOURCES);
-                    creep.say('⛏');
-                    if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
+                        creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffaa00'}});
                     }
-                }
 	        }
 	        
         }else{
