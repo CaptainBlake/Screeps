@@ -34,12 +34,28 @@ var roleJanitor = {
                     }
                 }
         }else {
-            var stores = creep.room.find(FIND_STRUCTURES, {
-                filter: (structure) => {
-                    return (structure.structureType == STRUCTURE_EXTENSION)
-                        && structure.energy != 0;
+            var stores;
+            if(Memory.tier.level >= 3){
+                stores = creep.room.find(FIND_STRUCTURES, {
+                    filter: (container) => {
+                        return (container.structureType == STRUCTURE_CONTAINER)
+                            && container.store[RESOURCE_ENERGY] < 0;
+                    }
+                });
+            }else{
+                stores = creep.room.find(FIND_STRUCTURES, {
+                    filter: (structure) => {
+                        return (structure.structureType == STRUCTURE_EXTENSION)
+                            && structure.energy != 0;
+                    }
+                });
+            }
+            if(stores.length > 0) {
+                //creep.say('pick up');
+                if(creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
-            });
+            }
             if (stores.length > 0) {
                 //creep.say('pick up');
                 if (creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

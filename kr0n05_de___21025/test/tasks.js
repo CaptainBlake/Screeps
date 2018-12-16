@@ -3,6 +3,8 @@
  */
 
 var tasks = {
+
+    //Roadplan
     roadPlan: function() {
         var pathToController = Game.spawns['Spawn1'].room.findPath(Game.spawns['Spawn1'].pos, Game.spawns['Spawn1'].room.controller.pos, {ignoreCreeps: true, swampCost: 2});
         for(var i = 0; i<pathToController.length-1; i++){
@@ -21,15 +23,18 @@ var tasks = {
             }
         }
     },
-    
+
+    //Wallplan
     wallPlan: function () {
         //insert smart code here
     },
+
+    //Cost-function
     bodyCost: function(body) {
-    return body.reduce(function (cost, part) {
-        return cost + BODYPART_COST[part];
-    }, 0);
-}
+        return body.reduce(function (cost, part) {
+            return cost + BODYPART_COST[part];
+        }, 0);
+    },
 };
 
 module.exports = tasks;

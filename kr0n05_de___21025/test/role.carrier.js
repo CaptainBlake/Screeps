@@ -5,7 +5,9 @@ var roleCarrier = {
 
     run: function(creep){
         //creepfunction
-    }
+    },
+
+    //Spawn function
     spawn: function(spawner, version) {
         //Constructor
         var newName = roleName + Game.time;

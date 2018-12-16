@@ -27,12 +27,22 @@ var roleUpgrader = {
 			}
 		}
 		else {
-			var stores = creep.room.find(FIND_STRUCTURES, {
-				filter: (structure) => {
-					return (structure.structureType == STRUCTURE_EXTENSION)
-							 && structure.energy != 0;
-				}
-			});
+			var stores;
+			if(Memory.tier.level < 3 || Game.spawns['Spawn1'].room.controller.ticksToDowngrade < 5000){
+				stores = creep.room.find(FIND_STRUCTURES, {
+					filter: (structure) => {
+						return (structure.structureType == STRUCTURE_EXTENSION)
+							&& structure.energy != 0;
+					}
+				});
+			}else if(Memory.tier.level >= 3){
+				stores = creep.room.find(FIND_STRUCTURES, {
+					filter: (structure) => {
+						return (structure.structureType == STRUCTURE_CONTAINER)
+							&& structure.energy != 0;
+					}
+				});
+			}
 			if(stores.length > 0) {
 				//creep.say('pick up');
 				if(creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
