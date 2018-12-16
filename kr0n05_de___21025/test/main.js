@@ -30,6 +30,12 @@ var maxJanitor = 0;
 var version = 1.0;
 var logging = false;
 var display = true;
+
+if(!Memory.defend)
+{
+    Memory.defend = {count: 0};
+}
+
 if(!Memory.tier){
     Memory.tier = {level: 0};
 }
@@ -218,6 +224,7 @@ module.exports.loop = function () {
             var towers = Game.rooms[roomName].find(
                 FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
             towers.forEach(tower => tower.attack(hostiles[0]));
+            Memory.defended.count++;
         }
     }
 };
