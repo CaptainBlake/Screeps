@@ -107,6 +107,7 @@ module.exports.loop = function () {
                 CreepList.push(Game.creeps[creepname].name);
             }
         }
+        CreepList.sort();
         Game.spawns['Spawn1'].room.visual.text(
             "count: " + CreepList.length,
             0,
