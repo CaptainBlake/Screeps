@@ -54,7 +54,8 @@ var roleHarvester = {
             }else{
 
                 //idle-mode
-                creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
+                //creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffffff'}});
+                roleUpgrader.run(creep);
             }
         }
 	},
