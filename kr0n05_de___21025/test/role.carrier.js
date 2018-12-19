@@ -13,7 +13,7 @@ let roleCarrier = {
         let newName = roleName + Game.time;
         //Tier-Stages
         let t3bodyParts = [CARRY,CARRY,CARRY,CARRY,MOVE];
-        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
+        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= spawner.room.energyAvailableSum){
             bodyParts = t3bodyParts;
         }
 
