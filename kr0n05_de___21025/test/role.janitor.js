@@ -23,20 +23,26 @@ let roleJanitor = {
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: object => object.hits < object.hitsMax - 1000
             });
-            if(creep.memory.target != null){
-                if(Game.getObjectById(creep.memory.target).hits < Game.getObjectById(creep.memory.target).hitsMax) {
-                    if (creep.repair(Game.getObjectById(creep.memory.target)) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(Game.getObjectById(creep.memory.target), {visualizePathStyle: {stroke: '#ffffff'}});
+            if(creep.memory.target != '0'){
+                let MemoryTarget = Game.getObjectById(creep.memory.target);
+                if(MemoryTarget.target.hits < MemoryTarget.hitsMax) {
+                    //repair till maxHP
+                    if (creep.repair(MemoryTarget) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(MemoryTarget, {visualizePathStyle: {stroke: '#ffffff'}});
                         //make it easier to see where the janitor is going (debug purpose for target prio)
                         Game.spawns['Spawn1'].room.visual.circle(
                             creep.memory._move.dest.x,
                             creep.memory._move.dest.y);
                     }
                 }else{
-                    creep.memory.target = null;
+                    creep.memory.target = '0';
                 }
             }else{
-                creep.memory.target = target.id;
+                if(target != null){
+                    creep.memory.target = target.id;
+                }else{
+                    creep.memory.repairing = false;
+                }
             }
 
 

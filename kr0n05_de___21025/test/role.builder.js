@@ -29,7 +29,8 @@ let roleBuilder = {
                 }
 	        }else {
                 let stores;
-                if(Memory.tier.level >= 3){
+                //old condition: Memory.tier.level >= 3
+                if(true){
                      stores = creep.room.find(FIND_STRUCTURES, {
                         filter: (container) => {
                             return (container.structureType == STRUCTURE_CONTAINER)
