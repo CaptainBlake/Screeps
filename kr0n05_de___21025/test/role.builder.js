@@ -33,7 +33,7 @@ let roleBuilder = {
                      stores = creep.room.find(FIND_STRUCTURES, {
                         filter: (container) => {
                             return (container.structureType == STRUCTURE_CONTAINER)
-                                && container.store[RESOURCE_ENERGY] < 0;
+                                && container.store[RESOURCE_ENERGY] > 0;
                         }
                     });
                 }else{
@@ -51,6 +51,7 @@ let roleBuilder = {
                     }
                 }else{
                         creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffaa00'}});
+                        console.log('Builder has no resources!');
                     }
 	        }
 	        

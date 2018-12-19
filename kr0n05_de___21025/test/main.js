@@ -77,6 +77,7 @@ module.exports.loop = function () {
     if(Memory.tier.level >= 3){
         if(Game.time%1000==0){
             tasks.roadPlan();
+            prefabs.secondExtention(Game.spawns['Spawn1']);
         }
     }
 
