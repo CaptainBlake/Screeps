@@ -214,6 +214,19 @@ module.exports.loop = function () {
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
+    //Tier5
+    if(Memory.tier.level == 4 && controllerlevel >= 6 && extCount.length >=10)
+    {
+        ++Memory.tier.level;
+        console.log('Reached Tier ' + Memory.tier.level);
+    }
+    
+    if(Memory.tier.level >= 3)
+    {
+        maxHarvester = 6;
+        maxJanitor = 2;
+        maxUpgrader = 6;
+    }
 
 
     //AI CONTROLLER

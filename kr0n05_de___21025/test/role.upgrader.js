@@ -37,9 +37,9 @@ let roleUpgrader = {
 				});
 			}else if(Memory.tier.level >= 3){
 				stores = creep.room.find(FIND_STRUCTURES, {
-					filter: (structure) => {
-						return (structure.structureType == STRUCTURE_CONTAINER)
-							&& structure.energy != 0;
+					filter: (container) => {
+						return (container.structureType == STRUCTURE_CONTAINER)
+							&& container.store[RESOURCE_ENERGY] > 0;
 					}
 				});
 			}
