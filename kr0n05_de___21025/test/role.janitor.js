@@ -32,7 +32,7 @@ let roleJanitor = {
              */
 
             let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: object => object.hits < object.hitsMax - 1000
+                filter: object => object.hits < object.hitsMax - object.hitsMax/2
             });
             if(creep.memory.target != null){
                 let MemoryTarget = Game.getObjectById(creep.memory.target);
@@ -96,7 +96,7 @@ let roleJanitor = {
         let src = Game.time%srcs.length;
         //Tier-Stages
         let t3bodyParts = [WORK,CARRY,CARRY,MOVE];
-        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
+        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= spawner.room.energyAvailableSum){
             bodyParts = t3bodyParts;
         }
         //Spawn

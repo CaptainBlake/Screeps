@@ -66,7 +66,7 @@ let roleBuilder = {
         let src = Game.time%srcs.length;
         //Tier-Stages
         let t3bodyParts = [WORK,WORK,CARRY,MOVE,MOVE];
-        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
+        if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= spawner.room.energyAvailableSum){
             bodyParts = t3bodyParts;
         }
 
