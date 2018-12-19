@@ -1,5 +1,5 @@
 /*
- * Task implements letious Jobs which can be done frequently
+ * Task implements letious (<<- LOL) Jobs which can be done frequently
  */
 
 let tasks = {

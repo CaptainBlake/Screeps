@@ -74,8 +74,22 @@ let prefabs = {
             Spawner.pos.x + 1,
             Spawner.pos.y,
             STRUCTURE_CONTAINER);   
-    }
+    },
 
-};
+    extractors: function(Spawner){
+        
+        let mineral = Spawner.pos.findClosestByPath(FIND_MINERALS, {
+            filter: (mins) => {
+                return mins;
+                }
+            });
+            Spawner.room.createConstructionSite(
+                mineral.pos.x,
+                mineral.pos.y,
+                STRUCTURE_EXTRACTOR);  
+
+
+        },
+    }
 
 module.exports = prefabs;

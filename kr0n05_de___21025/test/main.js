@@ -219,6 +219,7 @@ module.exports.loop = function () {
     {
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
+        prefabs.extracotrs(Game.spawns['Spawn1']);
     }
     
     if(Memory.tier.level >= 3)
@@ -226,6 +227,7 @@ module.exports.loop = function () {
         maxHarvester = 6;
         maxJanitor = 2;
         maxUpgrader = 6;
+        prefabs.extractors(Game.spawns['Spawn1']);
     }
 
 
