@@ -1,8 +1,8 @@
 /*
- * Task implements various Jobs which can be done frequently
+ * Task implements letious Jobs which can be done frequently
  */
 
-var tasks = {
+let tasks = {
 
     //Roadplan
     roadPlan: function() {
@@ -16,9 +16,9 @@ var tasks = {
     },
     
     roadToSource: function() {
-        for(var j = 0; j < Game.spawns['Spawn1'].room.find(FIND_SOURCES).length; j++){
-            var pathToNodes = Game.spawns['Spawn1'].room.findPath(Game.spawns['Spawn1'].pos, Game.spawns['Spawn1'].room.find(FIND_SOURCES)[j].pos, {ignoreCreeps: true, swampCost: 2});
-            for(var i = 0; i<pathToNodes.length-1; i++){
+        for(let j = 0; j < Game.spawns['Spawn1'].room.find(FIND_SOURCES).length; j++){
+            let pathToNodes = Game.spawns['Spawn1'].room.findPath(Game.spawns['Spawn1'].pos, Game.spawns['Spawn1'].room.find(FIND_SOURCES)[j].pos, {ignoreCreeps: true, swampCost: 2});
+            for(let i = 0; i<pathToNodes.length-1; i++){
                 Game.spawns['Spawn1'].room.createConstructionSite(
                     pathToNodes[i].x,
                     pathToNodes[i].y,
@@ -28,8 +28,8 @@ var tasks = {
     },
     
     roadToController: function() {
-         var pathToController = Game.spawns['Spawn1'].room.findPath(Game.spawns['Spawn1'].pos, Game.spawns['Spawn1'].room.controller.pos, {ignoreCreeps: true, swampCost: 2});
-        for(var i = 0; i<pathToController.length-1; i++){
+         let pathToController = Game.spawns['Spawn1'].room.findPath(Game.spawns['Spawn1'].pos, Game.spawns['Spawn1'].room.controller.pos, {ignoreCreeps: true, swampCost: 2});
+        for(let i = 0; i<pathToController.length-1; i++){
             Game.spawns['Spawn1'].room.createConstructionSite(
                 pathToController[i].x,
                 pathToController[i].y,

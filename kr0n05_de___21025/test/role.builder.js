@@ -2,16 +2,16 @@
  * Builder searches for Constructionsites within the room and tries to complete them.
  * Switches to Janitor-mode when hes IDLE
  */
-var tasks = require('tasks');
-var roleJanitor = require('role.janitor');
-var roleName = "builder";
-var bodyParts = [WORK,CARRY,MOVE];
-var roleBuilder = {
+let tasks = require('tasks');
+let roleJanitor = require('role.janitor');
+let roleName = "builder";
+let bodyParts = [WORK,CARRY,MOVE];
+let roleBuilder = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
 
-        var target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+        let target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
         if(target!=undefined){
             if(creep.memory.building && creep.carry.energy == 0) {
                 creep.memory.building = false;
@@ -28,7 +28,7 @@ var roleBuilder = {
                     creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                 }
 	        }else {
-                var stores;
+                let stores;
                 if(Memory.tier.level >= 3){
                      stores = creep.room.find(FIND_STRUCTURES, {
                         filter: (container) => {
@@ -60,11 +60,11 @@ var roleBuilder = {
 	},
     spawn: function(spawner, version) {
         //Constructor
-        var newName = roleName + Game.time;
-        var srcs = spawner.room.find(FIND_SOURCES);
-        var src = Game.time%srcs.length;
+        let newName = roleName + Game.time;
+        let srcs = spawner.room.find(FIND_SOURCES);
+        let src = Game.time%srcs.length;
         //Tier-Stages
-        var t3bodyParts = [WORK,WORK,CARRY,MOVE,MOVE];
+        let t3bodyParts = [WORK,WORK,CARRY,MOVE,MOVE];
         if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
             bodyParts = t3bodyParts;
         }
