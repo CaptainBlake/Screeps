@@ -1,7 +1,7 @@
-var tasks = require('tasks');
-var roleName = "Carrier";
-var bodyParts = [CARRY,CARRY,MOVE,MOVE];
-var roleCarrier = {
+let tasks = require('tasks');
+let roleName = "Carrier";
+let bodyParts = [CARRY,CARRY,MOVE,MOVE];
+let roleCarrier = {
 
     run: function(creep){
         //creepfunction
@@ -10,9 +10,9 @@ var roleCarrier = {
     //Spawn function
     spawn: function(spawner, version) {
         //Constructor
-        var newName = roleName + Game.time;
+        let newName = roleName + Game.time;
         //Tier-Stages
-        var t3bodyParts = [CARRY,CARRY,CARRY,CARRY,MOVE];
+        let t3bodyParts = [CARRY,CARRY,CARRY,CARRY,MOVE];
         if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
             bodyParts = t3bodyParts;
         }

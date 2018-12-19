@@ -2,7 +2,7 @@
  * Prefabs
  */
 
-var prefabs = {
+let prefabs = {
     //The first TIER 2 Extention
     firstExtention: function(Spawner) {
         Spawner.room.createConstructionSite(

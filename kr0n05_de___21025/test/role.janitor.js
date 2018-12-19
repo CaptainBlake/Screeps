@@ -1,11 +1,11 @@
 /*
  * Janitor Role keeps structures healthy
  */
-var tasks = require('tasks');
-var roleHarvester = require('role.harvester');
-var roleName = "janitor";
-var bodyParts = [WORK,CARRY,MOVE];
-var roleJanitor = {
+let tasks = require('tasks');
+let roleHarvester = require('role.harvester');
+let roleName = "janitor";
+let bodyParts = [WORK,CARRY,MOVE];
+let roleJanitor = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
@@ -20,21 +20,28 @@ var roleJanitor = {
             creep.memory.begin = Game.time;
         }
         if(creep.memory.repairing) {
-
-            const target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: object => object.hits < object.hitsMax
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: object => object.hits < object.hitsMax - 1000
             });
-                if(target!=undefined) {
-                    if (creep.repair(target) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+            if(creep.memory.target != null){
+                if(Game.getObjectById(creep.memory.target).hits < Game.getObjectById(creep.memory.target).hitsMax) {
+                    if (creep.repair(Game.getObjectById(creep.memory.target)) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(Game.getObjectById(creep.memory.target), {visualizePathStyle: {stroke: '#ffffff'}});
                         //make it easier to see where the janitor is going (debug purpose for target prio)
                         Game.spawns['Spawn1'].room.visual.circle(
                             creep.memory._move.dest.x,
                             creep.memory._move.dest.y);
                     }
+                }else{
+                    creep.memory.target = null;
                 }
+            }else{
+                creep.memory.target = target.id;
+            }
+
+
         }else {
-            var stores;
+            let stores;
             if(Memory.tier.level >= 3){
                 stores = creep.room.find(FIND_STRUCTURES, {
                     filter: (container) => {
@@ -50,19 +57,13 @@ var roleJanitor = {
                     }
                 });
             }
-            if(stores.length > 0) {
-                //creep.say('pick up');
-                if(creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
-                }
-            }
             if (stores.length > 0) {
                 //creep.say('pick up');
                 if (creep.withdraw(stores[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
                 }
             } else {
-                var sources = creep.room.find(FIND_SOURCES);
+                let sources = creep.room.find(FIND_SOURCES);
                 //creep.say('⛏');
                 if (creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
@@ -72,16 +73,16 @@ var roleJanitor = {
     },
     spawn: function(spawner, version) {
         //Constructor
-        var newName = roleName + Game.time;
-        var srcs = spawner.room.find(FIND_SOURCES);
-        var src = Game.time%srcs.length;
+        let newName = roleName + Game.time;
+        let srcs = spawner.room.find(FIND_SOURCES);
+        let src = Game.time%srcs.length;
         //Tier-Stages
-        var t3bodyParts = [WORK,CARRY,CARRY,MOVE];
+        let t3bodyParts = [WORK,CARRY,CARRY,MOVE];
         if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
             bodyParts = t3bodyParts;
         }
         //Spawn
-        if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src, ver: version, job : '⚒ harvest', begin : Game.time}}) >= 0){
+        if(spawner.spawnCreep(bodyParts, newName,{memory: {role: roleName, source: src,targetId : null , ver: version, job : '⚒ harvest', begin : Game.time }}) >= 0){
             console.log('Spawning new ' + roleName + ' ' + newName + " for the cost of " + tasks.bodyCost(bodyParts));
         }
     }

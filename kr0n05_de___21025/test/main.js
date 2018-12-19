@@ -2,7 +2,7 @@
      Kraken AI - v.1.1
 
      Main handles:
-     -Vars
+     -lets
      -Console Log
      -Task Controller
      -Spawn Controller
@@ -11,25 +11,25 @@
 
  */
 
-//VARS
+//letS
 
 //Extentions
-var tasks = require('tasks');
-var prefabs = require('prefabs');
+let tasks = require('tasks');
+let prefabs = require('prefabs');
 //Roles
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleJanitor = require('role.janitor');
+let roleHarvester = require('role.harvester');
+let roleUpgrader = require('role.upgrader');
+let roleBuilder = require('role.builder');
+let roleJanitor = require('role.janitor');
 //MaxRoles
-var maxBuilder = 1;
-var maxUpgrader = 1;
-var maxHarvester = 2;
-var maxJanitor = 0;
+let maxBuilder = 1;
+let maxUpgrader = 1;
+let maxHarvester = 2;
+let maxJanitor = 0;
 //globals
-var version = 1.0;
-var logging = false;
-var display = true;
+let version = 1.0;
+let logging = false;
+let display = true;
 
 if(!Memory.defend)
 {
@@ -46,11 +46,11 @@ if(!Memory.tier.plannedToCont){
 module.exports.loop = function () {
 
     //Lists
-    var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
-    var builders = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
-    var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
-    var janitors = _.filter(Game.creeps, (creep) => creep.memory.role === 'janitor');
-    var extCount = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {
+    let harvesters = _.filter(Game.creeps, (creep) => creep.memory.role === 'harvester');
+    let builders = _.filter(Game.creeps, (creep) => creep.memory.role === 'builder');
+    let upgraders = _.filter(Game.creeps, (creep) => creep.memory.role === 'upgrader');
+    let janitors = _.filter(Game.creeps, (creep) => creep.memory.role === 'janitor');
+    let extCount = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES, {
         filter: (structure) => {
             return (structure.structureType == STRUCTURE_EXTENSION);
         }
@@ -84,7 +84,7 @@ module.exports.loop = function () {
 
     //Spawn icon
     if(Game.spawns['Spawn1'].spawning) {
-        var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
+        let spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
         Game.spawns['Spawn1'].room.visual.text(
             '🛠️' + spawningCreep.memory.role,
             Game.spawns['Spawn1'].pos.x + 1,
@@ -93,7 +93,7 @@ module.exports.loop = function () {
     }
 
     //Ethnic cleansing
-    for(var name in Memory.creeps) {
+    for(let name in Memory.creeps) {
         //Darwin
         if(Game.creeps[name] && Game.creeps[name].memory.ver != version){
             Game.creeps[name].suicide();
@@ -107,8 +107,8 @@ module.exports.loop = function () {
 
     // display
     if(display){
-        var CreepList = [];
-        for (var creepname in Memory.creeps){
+        let CreepList = [];
+        for (let creepname in Memory.creeps){
             if (Game.creeps[creepname].room == Game.spawns['Spawn1'].room){
                 CreepList.push(Game.creeps[creepname].name);
             }
@@ -119,7 +119,7 @@ module.exports.loop = function () {
             0,
             0,
             {align: 'left', opacity: 0.8});
-        for(var creep in CreepList){
+        for(let creep in CreepList){
             Game.spawns['Spawn1'].room.visual.text(
                 (parseInt(creep)+1).toString().padStart((CreepList.length).toString().length ,"0") + ": " +CreepList[creep] + " doing " + Game.creeps[CreepList[creep]].memory.job + " for " + (Game.time - Game.creeps[CreepList[creep]].memory.begin) + " ticks.",
                 0,
@@ -151,8 +151,8 @@ module.exports.loop = function () {
 
 
     //Role-Handler
-    for(var name in Game.creeps) {
-        var creep = Game.creeps[name];
+    for(let name in Game.creeps) {
+        let creep = Game.creeps[name];
         if(creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
         }
@@ -177,7 +177,7 @@ module.exports.loop = function () {
     {align: 'center', opacity: 0.8});
 
     //Tier modes
-    var controllerlevel =Game.spawns['Spawn1'].room.controller.level;
+    let controllerlevel =Game.spawns['Spawn1'].room.controller.level;
 
     //Tier 1
     if(Memory.tier.level == 0 && builders.length > 0){
@@ -219,16 +219,16 @@ module.exports.loop = function () {
 
     //Tower AI (attack only)
     function defendRoom(roomName) {
-        var hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
-        var damaged = Game.rooms[roomName].find(FIND_MY_STRUCTURES);
+        let hostiles = Game.rooms[roomName].find(FIND_HOSTILE_CREEPS);
+        let damaged = Game.rooms[roomName].find(FIND_MY_STRUCTURES);
         if(hostiles.length > 0) {
-            var towers = Game.rooms[roomName].find(
+            let towers = Game.rooms[roomName].find(
                 FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
             towers.forEach(tower => tower.attack(hostiles[0]));
             Memory.defended.count++;
         }
         if(damaged.length > 0){
-            var towers = Game.rooms[roomName].find(
+            let towers = Game.rooms[roomName].find(
                 FIND_MY_STRUCTURES, {filter: {structureType: STRUCTURE_TOWER}});
              towers.forEach(tower => tower.repair(damaged[0]));
         }

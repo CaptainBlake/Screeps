@@ -2,10 +2,10 @@
  * Upgrader stays @the RoomController and keeps pushing it up. Can switch Roles with low priority
  */
 
-var tasks = require('tasks');
-var roleName = "upgrader";
-var bodyParts = [WORK,CARRY,MOVE];
-var roleUpgrader = {
+let tasks = require('tasks');
+let roleName = "upgrader";
+let bodyParts = [WORK,CARRY,MOVE];
+let roleUpgrader = {
 
 	/** @param {Creep} creep **/
 	run: function(creep) {
@@ -27,7 +27,7 @@ var roleUpgrader = {
 			}
 		}
 		else {
-			var stores;
+			let stores;
 			if(Memory.tier.level < 3 || Game.spawns['Spawn1'].room.controller.ticksToDowngrade < 5000){
 				stores = creep.room.find(FIND_STRUCTURES, {
 					filter: (structure) => {
@@ -49,7 +49,7 @@ var roleUpgrader = {
 					creep.moveTo(stores[0], {visualizePathStyle: {stroke: '#ffffff'}});
 				}
 			}else{
-				var sources = creep.room.find(FIND_SOURCES);
+				let sources = creep.room.find(FIND_SOURCES);
 				//creep.say('⛏');
 				if(creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
 					creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
@@ -59,11 +59,11 @@ var roleUpgrader = {
 	},
     spawn: function(spawner, version) {
         //Constructor
-        var newName = roleName + Game.time;
-        var srcs = spawner.room.find(FIND_SOURCES);
-        var src = Game.time%srcs.length;
+        let newName = roleName + Game.time;
+        let srcs = spawner.room.find(FIND_SOURCES);
+        let src = Game.time%srcs.length;
         //Tier-Stages
-        var t3bodyParts = [WORK,WORK,CARRY,CARRY,MOVE];
+        let t3bodyParts = [WORK,WORK,CARRY,CARRY,MOVE];
         if(Memory.tier.level >= 3 && tasks.bodyCost(t3bodyParts) <= Game.spawns['Spawn1'].room.energyAvailableSum){
             bodyParts = t3bodyParts;
         }
