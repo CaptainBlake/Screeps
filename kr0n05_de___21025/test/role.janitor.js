@@ -53,7 +53,6 @@ let roleJanitor = {
             }else{
                 if(target != null){
                     creep.memory.target = target.id;
-                    console.log('JANITOR: getting new target')
                 }else{
                     creep.memory.repairing = false;
                 }
