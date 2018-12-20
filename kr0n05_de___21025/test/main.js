@@ -70,13 +70,13 @@ module.exports.loop = function () {
         }
     }
     //TASK CONTROLLER
-
+    
     //Tasklist
 
     defendRoom(Game.spawns['Spawn1'].room.name);
     if(Memory.tier.level >= 3){
         if(Game.time%1000==0){
-            tasks.roadPlan();
+            
             prefabs.secondExtention(Game.spawns['Spawn1']);
         }
     }
