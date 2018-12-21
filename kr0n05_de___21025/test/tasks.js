@@ -41,12 +41,51 @@ let tasks = {
     wallPlan: function () {
         //insert smart code here
     },
-
     //Cost-function
     bodyCost: function(body) {
         return body.reduce(function (cost, part) {
             return cost + BODYPART_COST[part];
         }, 0);
+    },
+    //Repair-Script 2.0
+    repair: function(creep){
+        /*
+            *  Repair function 2.0
+            *  -> Creep searches for targets via filter-rule
+            *  -> Copy of ID to creep memory
+            *  -> Seek and repair via "GetObjectByID(Target)"
+            *  ->repairs till own condition fails (till max HP in this case)
+            *  -> gets new target or switches roles
+            *
+            *  Known Bugs: Sometimes it seems to loop in the inner-repair function. Maybe wrong Memory conditions? IDK
+            */
+
+        let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            filter: object => object.hits < object.hitsMax - object.hitsMax/2
+        });
+        if(creep.memory.target != null){
+            let MemoryTarget = Game.getObjectById(creep.memory.target);
+            if(MemoryTarget != undefined){
+                if(MemoryTarget.hits < MemoryTarget.hitsMax) {
+                    //repair till maxHP
+                    if (creep.repair(MemoryTarget) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(MemoryTarget, {visualizePathStyle: {stroke: '#ffffff'}});
+                        //make it easier to see where the janitor is going (debug purpose for target prio)
+                        Game.spawns['Spawn1'].room.visual.circle(
+                            creep.memory._move.dest.x,
+                            creep.memory._move.dest.y);
+                    }
+                }else{
+                    creep.memory.target = null;
+                }
+            }
+        }else{
+            if(target != null){
+                creep.memory.target = target.id;
+            }else{
+                creep.memory.repairing = false;
+            }
+        }
     },
 };
 
