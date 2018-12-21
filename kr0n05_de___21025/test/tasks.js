@@ -63,6 +63,7 @@ let tasks = {
         let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
             filter: object => object.hits < object.hitsMax - object.hitsMax/2
         });
+
         if(creep.memory.target != null){
             let MemoryTarget = Game.getObjectById(creep.memory.target);
             if(MemoryTarget != undefined){

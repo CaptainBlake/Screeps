@@ -39,7 +39,8 @@ let roleBuilder = {
                 }else{
                     stores = creep.room.find(FIND_STRUCTURES, {
                         filter: (structure) => {
-                            return (structure.structureType == STRUCTURE_EXTENSION)
+                            return (structure.structureType == STRUCTURE_EXTENSION ||
+                                    structure.structureType == STRUCTURE_SPAWN)
                                 && structure.energy != 0;
                         }
                     });
@@ -56,7 +57,11 @@ let roleBuilder = {
 	        }
 	        
         }else{
-            roleJanitor.run(creep);
+            if(Memory.tier.level >= 3){
+                roleJanitor.run(creep);
+            }else{
+                creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: '#ffaa00'}});
+            }
         }
 	},
     spawn: function(spawner, version) {
