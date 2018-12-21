@@ -70,13 +70,13 @@ module.exports.loop = function () {
         }
     }
     //TASK CONTROLLER
-    
+
     //Tasklist
 
     defendRoom(Game.spawns['Spawn1'].room.name);
     if(Memory.tier.level >= 3){
         if(Game.time%1000==0){
-            
+            tasks.roadPlan();
             prefabs.secondExtention(Game.spawns['Spawn1']);
         }
     }
@@ -214,7 +214,7 @@ module.exports.loop = function () {
         ++Memory.tier.level;
         console.log('Reached Tier ' + Memory.tier.level);
     }
-    //Tier5
+    //Tier 5
     if(Memory.tier.level == 4 && controllerlevel >= 6 && extCount.length >=10)
     {
         ++Memory.tier.level;

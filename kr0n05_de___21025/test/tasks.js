@@ -6,31 +6,20 @@ let tasks = {
 
     //Roadplan
     roadPlan: function() {
-        this.roadToController(Game.spawns['Spawn1']);
-        this.roadToSource(Game.spawns['Spawn1']); 
-        this.roadToMineral(Game.spawns['Spawn1']);
+        this.roadToController();
+        this.roadToSource(); 
+        this.roadToMineral();
     },
     
-    roadToMineral: function(Spawner){
+    roadToMineral: function(){
         //toBeImplementet.exe
-
-        for(let j = 0; j < Spawner.room.find(FIND_MINERALS).length; j++){
-            let pathToNodes = Spawner.room.findPath(Spawner.pos, Spawner.room.find(FIND_MINERALS)[j].pos, {ignoreCreeps: true, swampCost: 2});
-            for(let i = 0; i < pathToNodes.length - 1; i++)
-            {
-                Spawner.room.createConstructionSite(
-                    pathToNodes[i].x,
-                    pathToNodes[i].y,
-                    STRUCTURE_ROAD);
-            }
-        }
     },
     
-    roadToSource: function(Spawner) {
-        for(let j = 0; j < Spawner.room.find(FIND_SOURCES).length; j++){
-            let pathToNodes = Spawner.room.findPath(Spawner.pos, Spawner.room.find(FIND_SOURCES)[j].pos, {ignoreCreeps: true, swampCost: 2});
+    roadToSource: function() {
+        for(let j = 0; j < Game.spawns['Spawn1'].room.find(FIND_SOURCES).length; j++){
+            let pathToNodes = Game.spawns['Spawn1'].room.findPath(Game.spawns['Spawn1'].pos, Game.spawns['Spawn1'].room.find(FIND_SOURCES)[j].pos, {ignoreCreeps: true, swampCost: 2});
             for(let i = 0; i<pathToNodes.length-1; i++){
-                Spawner.room.createConstructionSite(
+                Game.spawns['Spawn1'].room.createConstructionSite(
                     pathToNodes[i].x,
                     pathToNodes[i].y,
                     STRUCTURE_ROAD);
@@ -38,10 +27,10 @@ let tasks = {
         }
     },
     
-    roadToController: function(Spawner) {
-         let pathToController = Spawner.room.findPath(Spawner.pos, Spawner.room.controller.pos, {ignoreCreeps: true, swampCost: 2});
+    roadToController: function() {
+         let pathToController = Game.spawns['Spawn1'].room.findPath(Game.spawns['Spawn1'].pos, Game.spawns['Spawn1'].room.controller.pos, {ignoreCreeps: true, swampCost: 2});
         for(let i = 0; i<pathToController.length-1; i++){
-            Spawner.room.createConstructionSite(
+            Game.spawns['Spawn1'].room.createConstructionSite(
                 pathToController[i].x,
                 pathToController[i].y,
                 STRUCTURE_ROAD);
