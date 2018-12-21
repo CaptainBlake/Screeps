@@ -49,6 +49,8 @@ let roleJanitor = {
                 if (creep.harvest(sources[creep.memory.source]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[creep.memory.source], {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
+                //idle-mode
+                creep.moveTo(Game.spawns['Spawn1']);
             }
         }
     },
